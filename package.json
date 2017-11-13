@@ -1,0 +1,23 @@
+{
+  "name": "slack-photos-vanilla-js",
+  "version": "0.0.1",
+  "description": "display some photos with vanilla js",
+  "main": "index.js",
+  "repository": "[none]",
+  "author": "William Harris <wharris@upscalews.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "babel-node src",
+    "test": "eslint src && jest --coverage"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "jest": "^21.2.1"
+  }
+}
