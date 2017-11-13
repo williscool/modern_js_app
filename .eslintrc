@@ -1,7 +1,8 @@
 {
   "extends": "airbnb-base",
   "env": {
-    "jest": true
+    "jest": true,
+    "browser": true
   },
   "rules": {
     "max-len": ["error", 120, { "ignoreComments": true }],
