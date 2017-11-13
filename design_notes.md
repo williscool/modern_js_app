@@ -16,6 +16,7 @@
 ## p1
 
 - tracking (for view count, how many times they scroll the infinite scroll, buttons clicked, images moused over or whatever stuff you can think to track. pusedocode sending it to api. just console .log it out	)
+- minification of css, js, html
 - you can search for whatever type of photos you want
 - https://github.com/lettertwo/appcache-webpack-plugin
 
@@ -57,4 +58,11 @@
 - https://en.wikipedia.org/wiki/Safari_version_history#Mac
 - https://medium.com/airbnb-engineering/unlocking-test-performance-migrating-from-mocha-to-jest-2796c508ec50
 - https://github.com/jantimon/html-webpack-plugin
+- https://survivejs.com/webpack/styling/loading/
+- https://www.bignerdranch.com/blog/postcss-life-after-sass/
+- https://github.com/postcss/postcss#readme
+- http://cssnext.io/
+- https://www.postcss.parts/
+- https://survivejs.com/webpack/styling/loading/
+- https://www.youtube.com/watch?v=AbPSMUt8axM&list=PLnUE-7Cz5mHExcBWO9VV_GN-fniE2l-CR&index=2
 

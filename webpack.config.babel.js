@@ -17,6 +17,15 @@ export default {
   module: {
     rules: [
       { test: /\.(js)$/, use: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.css$/,
+        exclude: /node_modules/,
+        use: [
+          { loader: 'style-loader', options: { sourceMap: true } },
+          { loader: 'css-loader', options: { importLoaders: 1, sourceMap: true } },
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+        ],
+      },
     ],
   },
   plugins: [

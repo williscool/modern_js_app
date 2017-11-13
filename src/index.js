@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import './styles/main.css';
 import { APP_CONTAINER_SELECTOR } from './config';
 
 document.addEventListener('DOMContentLoaded', () => {
