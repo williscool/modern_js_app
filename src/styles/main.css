@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Arvo');
+@import url("https://fonts.googleapis.com/css?family=Arvo");
 
 :root {
   --mainColor: red;
 }
 
-h1{
+h1 {
   color: var(--mainColor);
 }

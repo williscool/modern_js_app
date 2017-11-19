@@ -17,6 +17,8 @@ A modern js app.
 - [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) to generate a html page that includes the app without the need for separate server
 - husky for hooks ( i.e. to run tests before committing)
 - PostCss for nextcss future and sass like features etc. https://www.bignerdranch.com/blog/postcss-life-after-sass/
+- TypeScript
+- React
 
 
 

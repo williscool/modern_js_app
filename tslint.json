@@ -1,15 +1,25 @@
+// other inspiration
+// https://github.com/Microsoft/TypeScript/blob/2f2a82b91dd1286723308b9af0505560491af700/tslint.json
 {
   "extends": [
     "tslint:latest",
     "tslint-microsoft-contrib",
     "tslint-consistent-codestyle",
     "tslint-config-airbnb",
+    "tslint-react",
     "tslint-config-prettier"
   ],
   "rules": {
     "max-line-length": {
       "options": [120]
     },
-    "completed-docs": true
+    "completed-docs": true,
+    "interface-name": {
+      // https://github.com/Microsoft/TypeScript/wiki/Coding-guidelines
+      "options": "never-prefix"
+    },
+    "no-relative-imports": false,
+    "no-import-side-effect": [true, { "ignore-module": "(\\.html|\\.css)$" }],
+    "no-unsafe-any": false // until fix for https://github.com/palantir/tslint/issues/3080
   }
 }

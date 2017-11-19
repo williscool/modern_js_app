@@ -1,51 +1,54 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path from "path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
 
-import { WDS_PORT,
+import {
+  WDS_PORT,
   STATIC_PATH,
   APP_NAME,
-  APP_CONTAINER_CLASS,
-} from './src/config';
+  APP_CONTAINER_CLASS
+} from "./src/config";
 
-import { isProd } from './src/util';
+import { isProd } from "./src/util";
 
 export default {
-  entry: [
-    './src',
-  ],
-  output: {
-    filename: 'js/bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: isProd ? STATIC_PATH : `http://localhost:${WDS_PORT}/dist/`,
+  devServer: {
+    port: WDS_PORT
   },
+  devtool: isProd ? false : "source-map",
+  entry: ["./src"],
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
+      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
       {
-        test: /\.css$/,
         exclude: /node_modules/,
+        test: /\.css$/,
         use: [
-          { loader: 'style-loader', options: { sourceMap: true } },
-          { loader: 'css-loader', options: { importLoaders: 1, sourceMap: true } },
-          { loader: 'postcss-loader', options: { sourceMap: true } },
-        ],
-      },
-    ],
+          { loader: "style-loader", options: { sourceMap: true } },
+          {
+            loader: "css-loader",
+            options: { importLoaders: 1, sourceMap: true }
+          },
+          { loader: "postcss-loader", options: { sourceMap: true } }
+        ]
+      }
+    ]
+  },
+  output: {
+    filename: "js/bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    publicPath: isProd ? STATIC_PATH : `http://localhost:${WDS_PORT}/dist/`
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: APP_NAME,
-      template: 'src/index.html',
-      templateVariables: { // using this key of the hash to pass arbitrary data through to the template. can be finiky though restart server if variables don't show immediately
-        containerClassName: APP_CONTAINER_CLASS,
+      template: "src/index.html",
+      templateVariables: {
+        // using this key of the hash to pass arbitrary data through to the template. can be finiky though restart server if variables don't show immediately
+        containerClassName: APP_CONTAINER_CLASS
       },
-    }),
+      title: APP_NAME
+    })
   ],
-  devtool: isProd ? false : 'source-map',
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx'],
-  },
-  devServer: {
-    port: WDS_PORT,
-  },
+    extensions: [".js", ".jsx", ".ts", ".tsx"]
+  }
 };

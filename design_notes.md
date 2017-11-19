@@ -4,12 +4,6 @@
 
 ## Pre
 
-- typescript
-- webpack for typescript
-- typescript jsx
-- tslint and airbnb config
-- prettier (make sure to pin it to an exact realease!)
-- make sure we can build here
 - get a good looking form from codepen
 
 
@@ -86,14 +80,14 @@
 
 
 
-
-
 ### Pre
 
 - typescript
 - webpack for typescript
 - typescript jsx
 - tslint and airbnb config
+- prettier (make sure to pin it to an exact realease!)
+- make sure we can build here
 
 
 
