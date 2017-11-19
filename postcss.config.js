@@ -7,6 +7,7 @@ module.exports = {
     'postcss-import': {},
     precss: {},
     'postcss-cssnext': {},
+    'postcss-hexrgba': {},
   },
 };
 

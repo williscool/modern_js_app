@@ -1,5 +1,5 @@
 {
-  "extends": "airbnb-base",
+  "extends": "airbnb",
   "env": {
     "jest": true,
     "browser": true
@@ -7,6 +7,7 @@
   "rules": {
     "max-len": ["error", 120, { "ignoreComments": true }],
     "valid-jsdoc": ["error", {"requireReturn": false}],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }]
   }
 }

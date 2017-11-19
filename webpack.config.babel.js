@@ -1,7 +1,12 @@
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-import { WDS_PORT, STATIC_PATH, APP_NAME, APP_CONTAINER_CLASS } from './src/config';
+import { WDS_PORT,
+  STATIC_PATH,
+  APP_NAME,
+  APP_CONTAINER_CLASS,
+} from './src/config';
+
 import { isProd } from './src/util';
 
 export default {
@@ -16,7 +21,7 @@ export default {
   },
   module: {
     rules: [
-      { test: /\.(js)$/, use: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
       {
         test: /\.css$/,
         exclude: /node_modules/,
@@ -39,7 +44,7 @@ export default {
   ],
   devtool: isProd ? false : 'source-map',
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.js', '.jsx'],
   },
   devServer: {
     port: WDS_PORT,

@@ -1,6 +1,8 @@
-# Photos App - Technical Exercise from Slack
+# Currency Exchange Quotes
 
-A modern vanilla js app.
+A modern js app.
+
+(add more detail about what it supposed to do)
 
 ## Features
 
@@ -14,8 +16,16 @@ A modern vanilla js app.
 - webpack for development server and module compilation for production distribution
 - [html-webpack-plugin](https://github.com/jantimon/html-webpack-plugin) to generate a html page that includes the app without the need for separate server
 - husky for hooks ( i.e. to run tests before committing)
+- PostCss for nextcss future and sass like features etc. https://www.bignerdranch.com/blog/postcss-life-after-sass/
 
 
+
+
+## About
+
+Checkout the [design_notes.md](design_notes.md)
+
+For methodology and roadmap
 
 ## Usage
 
@@ -44,4 +54,3 @@ Production build
 ```
 yarn prod:build
 ```
-
