@@ -1,9 +1,5 @@
 # Currency Exchange Quotes
 
-(just go with es6 react so we can get thsi done)
-
-use this https://frontendmasters.com/courses/react/configuring-webpack
-
 
 
 ## Pre
@@ -12,7 +8,7 @@ use this https://frontendmasters.com/courses/react/configuring-webpack
 - webpack for typescript
 - typescript jsx
 - tslint and airbnb config
-- prettier
+- prettier (make sure to pin it to an exact realease!)
 - make sure we can build here
 - get a good looking form from codepen
 
@@ -85,6 +81,25 @@ use this https://frontendmasters.com/courses/react/configuring-webpack
 
 
 
+
+## Done
+
+
+
+
+
+### Pre
+
+- typescript
+- webpack for typescript
+- typescript jsx
+- tslint and airbnb config
+
+
+
+
+
+
 ## Sources
 
 - https://github.com/williscool/code_gym
@@ -102,3 +117,11 @@ use this https://frontendmasters.com/courses/react/configuring-webpack
 - https://www.postcss.parts/
 - https://survivejs.com/webpack/styling/loading/
 - https://www.youtube.com/watch?v=AbPSMUt8axM&list=PLnUE-7Cz5mHExcBWO9VV_GN-fniE2l-CR&index=2
+- https://frontendmasters.com/courses/react/
+- https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html
+- https://www.typescriptlang.org/docs/handbook/react-&-webpack.html
+- https://github.com/Microsoft/TypeScript-React-Starter#typescript-react-starter
+- https://github.com/palantir/tslint
+- https://github.com/progre/tslint-config-airbnb
+- https://github.com/progre/tslint-config-airbnb/blob/5.4.2/tslint.js
+- https://palantir.github.io/tslint/usage/type-checking/

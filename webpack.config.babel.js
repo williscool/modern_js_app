@@ -11,7 +11,6 @@ import { isProd } from './src/util';
 
 export default {
   entry: [
-    'babel-polyfill',
     './src',
   ],
   output: {
@@ -21,7 +20,7 @@ export default {
   },
   module: {
     rules: [
-      { test: /\.(js|jsx)$/, use: 'babel-loader', exclude: /node_modules/ },
+      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
       {
         test: /\.css$/,
         exclude: /node_modules/,
@@ -44,7 +43,7 @@ export default {
   ],
   devtool: isProd ? false : 'source-map',
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
   devServer: {
     port: WDS_PORT,

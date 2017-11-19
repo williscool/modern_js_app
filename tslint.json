@@ -1,0 +1,15 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-microsoft-contrib",
+    "tslint-consistent-codestyle",
+    "tslint-config-airbnb",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "max-line-length": {
+      "options": [120]
+    },
+    "completed-docs": true
+  }
+}
