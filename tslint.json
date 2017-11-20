@@ -1,6 +1,9 @@
 // other inspiration
 // https://github.com/Microsoft/TypeScript/blob/2f2a82b91dd1286723308b9af0505560491af700/tslint.json
 {
+  "cliOptions": {
+    "exclude": ["/coverage"] // sigh  https://github.com/palantir/tslint/issues/73
+  },
   "extends": [
     "tslint:latest",
     "tslint-microsoft-contrib",
@@ -20,6 +23,7 @@
     },
     "no-relative-imports": false,
     "no-import-side-effect": [true, { "ignore-module": "(\\.html|\\.css)$" }],
-    "no-unsafe-any": false // until fix for https://github.com/palantir/tslint/issues/3080
+    "no-unsafe-any": false, // until fix for https://github.com/palantir/tslint/issues/3080
+    "no-implicit-dependencies": [true, "dev"]
   }
 }

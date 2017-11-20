@@ -10,7 +10,7 @@ A modern js app.
 - babel with browserlist compiling es6 for modern browsers in the style of N-1 (latest browser previous version) http://browserl.ist/?q=Last+1+versions%2C+not+ie+%3C+11%2C+safari+%3E%3D+10
 
 
-- eslint for linting
+- eslint and tstlint for linting
 - jest for testing
 - jsdoc for documentation
 - webpack for development server and module compilation for production distribution

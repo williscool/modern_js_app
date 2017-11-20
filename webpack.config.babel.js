@@ -18,7 +18,13 @@ export default {
   entry: ["./src"],
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+      { test: /\.(jsx?|tsx?)$/, loader: "awesome-typescript-loader" },
+      {
+        enforce: "pre",
+        include: "/mnt/c/Users/william/linuxshared/modern-js-stack-code-test",
+        loader: "source-map-loader",
+        test: /\.(jsx?|tsx?)$/
+      },
       {
         exclude: /node_modules/,
         test: /\.css$/,
