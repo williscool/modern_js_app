@@ -155,3 +155,4 @@
 - https://www.youtube.com/watch?v=qH4pJISKeoI
 - https://spin.atomicobject.com/2017/06/05/tslint-linting-setup/
 - https://github.com/Mercateo/react-with-typescript#stateless-functional-components
+- [How to code a form in React by Ben Awad on Youtube](https://www.youtube.com/playlist?list=PLN3n1USn4xllZIJyrGvCu5ihs2GoMtk1Q)

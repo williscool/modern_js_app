@@ -32,6 +32,13 @@
     "no-unsafe-any": false, // until fix for https://github.com/palantir/tslint/issues/3080
     "no-implicit-dependencies": [true, "dev"],
     "export-name": false, // I prefer the component folder style i.e. /App/index.ts,
-    "typedef": false // until this gets done https://github.com/palantir/tslint/issues/711#issuecomment-313886382
+    "typedef": false, // until this gets done https://github.com/palantir/tslint/issues/711#issuecomment-313886382
+    "member-ordering": false,
+    "react-this-binding-issue": [true, { "allow-anonymous-listeners": true }],
+    // https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56
+    "jsx-no-lambda": false,
+    "jsx-no-bind": false,
+    "no-suspicious-comment": false, // designed to only really be used right before a release
+    "no-void-expression": false
   }
 }
