@@ -22,9 +22,9 @@ export function Hello({ name, enthusiasmLevel = 1 }: Props): JSX.Element {
 
   return (
     <div className="hello">
-      <h1 className="greeting">
+      <p className="greeting">
         Hello from {name + getExclamationMarks(enthusiasmLevel)}
-      </h1>
+      </p>
     </div>
   );
 }

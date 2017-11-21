@@ -39,6 +39,7 @@
     "jsx-no-lambda": false,
     "jsx-no-bind": false,
     "no-suspicious-comment": false, // designed to only really be used right before a release
-    "no-void-expression": false
+    "no-void-expression": false,
+    "no-submodule-imports": false
   }
 }

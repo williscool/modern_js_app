@@ -1,11 +1,49 @@
+import MenuItem from "material-ui/MenuItem";
+import RaisedButton from "material-ui/RaisedButton";
+import SelectField from "material-ui/SelectField";
+import TextField from "material-ui/TextField";
 import * as React from "react";
 
-interface FormChangeEvent {
-  target: {
-    name: string;
-    value: string;
-  };
+/**
+ * How is this not built into the language?
+ * https://stackoverflow.com/a/21294925/511710
+ * https://noahbass.com/posts/typescript-enum-iteration
+ *
+ * @param {{}} e
+ * @returns
+ */
+function filterEnum(e: {}) {
+  return Object.keys(e).filter(v => isNaN(Number(v)));
 }
+
+/**
+ * Delinates the action for the currencies
+ *
+ * Done this way you could add new Actions easily
+ *
+ * @enum {number}
+ */
+enum Actions {
+  Buy,
+  Sell
+}
+
+const ACTION_TYPES = filterEnum(Actions);
+
+/**
+ * Delinates the currency types.
+ *
+ * Will get moved to the discovery class that calls the api
+ *
+ * @enum {number}
+ */
+enum Curriences {
+  USD,
+  BTC,
+  LTC
+}
+
+const CURRENCY_TYPES = filterEnum(Curriences);
 
 /**
  * Its a form in react
@@ -18,35 +56,63 @@ export class Form extends React.Component {
   /**
    * State of the component
    *
+   *
    * @memberof Form
    */
   public state = {
-    action: "buy",
-    base_currency: "",
-    quote_currency: "",
-    amount: ""
+    actions: ACTION_TYPES,
+    curriences: CURRENCY_TYPES,
+    action_index: Actions.Buy,
+    base_currency_index: Curriences.USD,
+    quote_currency_index: Curriences.BTC,
+    amount: 0.0
   };
 
   /**
-   * Change handler for form inputs
+   * Change handler for select form inputs
    *
    * @private
    * @memberof Form
    */
-  private handleChange = (e: FormChangeEvent) => {
+  private handleSelectFieldChange = (
+    e: __MaterialUI.TouchTapEvent,
+    keyName: string,
+    index?: number,
+    value?: string
+  ) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [keyName]: value
     });
   };
 
   /**
+   * Take the value from the
+   *
+   * @private
+   * @memberof Form
+   */
+  private handleAmountTextFieldChange = (
+    e: React.FormEvent<{}>,
+    value: string
+  ) => {
+    let amt = Number(value);
+
+    if (isNaN(amt)) {
+      amt = 0;
+    }
+
+    this.setState({
+      amount: Number(value)
+    });
+  };
+  /**
    * Submit handler for form
    *
    * @private
-   * @param {React.MouseEvent<HTMLButtonElement>} e
+   * @param {React.MouseEvent<>} e
    * @memberof Form
    */
-  private onSubmit(e: React.MouseEvent<HTMLButtonElement>) {
+  private onSubmit(e: React.MouseEvent<{}>) {
     e.preventDefault();
     // console.log(this.state);
     // TODO: add form stuff here
@@ -61,45 +127,60 @@ export class Form extends React.Component {
   public render() {
     return (
       <form>
-        <select
-          name="action"
-          value={this.state.action}
-          onChange={e => this.handleChange(e)}
+        <SelectField
+          value={this.state.action_index}
+          onChange={(e, i, v) =>
+            this.handleSelectFieldChange(e, "action_index", i, v)
+          }
+          floatingLabelText="Action"
+          floatingLabelFixed={true}
         >
-          <option
-            role="option"
-            aria-selected={this.state.action === "buy"}
-            value="buy"
-          >
-            Buy
-          </option>
-          <option
-            role="option"
-            aria-selected={this.state.action === "sell"}
-            value="sell"
-          >
-            Sell
-          </option>
-        </select>
-        <input
-          name="base_currency"
-          placeholder="Base Currency"
-          value={this.state.base_currency}
-          onChange={e => this.handleChange(e)}
-        />
-        <input
-          name="quote_currency"
-          placeholder="Quote Currency"
-          value={this.state.quote_currency}
-          onChange={e => this.handleChange(e)}
-        />
-        <input
+          {this.state.actions.map((v, i) => {
+            return <MenuItem key={i} value={i} primaryText={v} />;
+          })}
+        </SelectField>
+        <br />
+        <SelectField
+          value={this.state.base_currency_index}
+          onChange={(e, i, v) =>
+            this.handleSelectFieldChange(e, "base_currency_index", i, v)
+          }
+          floatingLabelText="Base Currency"
+          floatingLabelFixed={true}
+        >
+          {this.state.curriences.map((v, i) => {
+            return <MenuItem key={i} value={i} primaryText={v} />;
+          })}
+        </SelectField>
+        <br />
+        <SelectField
+          value={this.state.quote_currency_index}
+          onChange={(e, i, v) =>
+            this.handleSelectFieldChange(e, "quote_currency_index", i, v)
+          }
+          floatingLabelText="Quote Currency"
+          floatingLabelFixed={true}
+        >
+          {this.state.curriences.map((v, i) => {
+            return <MenuItem key={i} value={i} primaryText={v} />;
+          })}
+        </SelectField>
+        <br />
+        <br />
+        <TextField
           name="amount"
-          placeholder="Amount"
+          hintText="10.00"
           value={this.state.amount}
-          onChange={e => this.handleChange(e)}
+          onChange={(e, v) => this.handleAmountTextFieldChange(e, v)}
+          floatingLabelText="Amount"
+          floatingLabelFixed={true}
         />
-        <button onClick={e => this.onSubmit(e)}> Submit </button>
+        <br />
+        <RaisedButton
+          label="Submit"
+          onClick={e => this.onSubmit(e)}
+          primary={true}
+        />
         <p> {JSON.stringify(this.state, null, 2)} </p>
       </form>
     );
