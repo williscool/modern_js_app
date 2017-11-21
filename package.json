@@ -11,9 +11,10 @@
     "start": "yarn dev:wds",
     "dev:wds": "webpack-dev-server --progress",
     "prod:build": "rimraf dist && NODE_ENV=production webpack -p --progress",
+    "format": "prettier --write .",
     "lint":
-      "prettier --write . && eslint src webpack.config.babel.js --ext .js && tslint -p . && ./node_modules/stylelint/bin/stylelint.js 'src/**/*.css'",
-    "test": "yarn lint && jest --coverage",
+      "eslint src webpack.config.babel.js --ext .js && tslint -p . && ./node_modules/stylelint/bin/stylelint.js 'src/**/*.css'",
+    "test": "yarn format && yarn lint && jest --coverage",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
   },
@@ -76,8 +77,8 @@
     "testEnvironment": "node",
     "mapCoverage": true,
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).ts?(x)"
+      "<rootDir>/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/**/?(*.)(spec|test).ts?(x)"
     ],
     "transform": {
       "^.+\\.jsx?$": "ts-jest",

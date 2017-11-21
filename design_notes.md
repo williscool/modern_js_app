@@ -8,10 +8,29 @@
 
 
 
+
+## I/O
+
+
+### form input field follow (all strings)
+
+- action ('buy' or 'sell') 
+- base_currency (The currency to be bought or sold), 
+- quote_currency (The currency to quote the price in)
+- amount (The amount of the base currency to be traded)
+
+### form output field follow (all strings)
+
+- price (The per-unit cost of the base currency)
+- total (Total quantity of quote currency)
+- currency (The quote currency)
+
 ## Overview
 
 - Your goal is to build a client-side web application that provides quotes for digital currency trades using
   data from the GDAX orderbook.
+- (mock the api respone json to test our algorithm with)
+- use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
 - GDAX, the digital currency exchange operated by Coinbase, maintains an order book for each tradable
   currency pair (eg. BTC-USD).
 - An order book is comprised of a series of bids (offers to buy) and asks (offers to sell).
@@ -30,6 +49,12 @@
 
 ## p0
 
+- folder per component with its css and etc. in there too. (imported at the top)
+- once we get the form working. just print it out in the ui under the form
+- once we get that done then we need to fit this api and make sure we've got some kind of loading animation
+- let user know we are crunching data once we get it back if it takes  a while 
+- ​
+- https://www.youtube.com/watch?v=qH4pJISKeoI
 - The application should be a client-side application that does not depend on a server. All API requests,
   form processing, and result display should be done client side in the browser. You should also write
   unit tests to ensure the logic functions correctly.
@@ -41,38 +66,46 @@
 - It should also be able to support trades where the base and quote currencies are the inverse of a GDAX trading pair. For example, the application should be able to quote a buy of BTC (base currency) using ETH (quote currency) or LTC (quote currency), even though the available GDAX orderbooks are ETH-BTC and LTC-BTC.
 - find a nice theme for it
 - product types https://docs.gdax.com/#get-products
-- probably can leave out the router
-
-### form input field follow (all strings)
-
-- action ('buy' or 'sell') 
-
-- base_currency (The currency to be bought or sold), 
-
-- quote_currency (The currency to quote the price in)
-
-- amount (The amount of the base currency to be traded)
-
-### form output field follow (all strings)
-
-- price (The per-unit cost of the base currency)
-- total (Total quantity of quote currency)
-- currency (The quote currency)
-
 
 ## p1
 
 - tracking (for when a user clicks, compares, prices of stuff, etc.)
 - leave redux for last  (figure out what thunks and sagas are) https://github.com/redux-saga
 
+## p2 (things I would do in the future) 
+- add a router if the app needed multiple pages
+- ​
+
 ## Clarification questions
 
-- by weight avg you mean...
-- Are there any web browser support requirements?
-- Do some currencies need to go through another. I.e. would we ever have to go from usd -> btc for usd - > ltc ? 
+- Are there any web browser support requirements? (can I not support IE 11 for instance) . I'm assuming Chrome, Firefox, Edge, and Safari on desktop (any mobile?)
+
+- Do any currencies need to go through another for calculating their exchange. i.e. would we ever have to go from usd -> [currencyA] then [currencyA] -> [currencyB] for usd - > [currencyB]?  or will there always be a currency to curency matching (even if only the inverse exists) from the api
+
+-  by
+
+  "... final quote will be a weighted average of those prices"
+
+  it means the cost of each ask or buy to fill the order multiplied by the price paid / divided by the total number of share correct?
+
+  i.e. for a buy quote
+
+  10 units from ask order A at ($5)
+
+  7 units from ask order A at ($11)
+
+  ( ( 10 * 5) * (7 * 11) ) / 17
+
+  <https://www.investopedia.com/terms/w/weightedaverage.asp> 
 
 
 
+
+### answers
+
+- answer only needs to work in latest chrome
+- no exchange through another currency
+- weighted avg though was correct
 
 
 
@@ -119,3 +152,6 @@
 - https://github.com/progre/tslint-config-airbnb
 - https://github.com/progre/tslint-config-airbnb/blob/5.4.2/tslint.js
 - https://palantir.github.io/tslint/usage/type-checking/
+- https://www.youtube.com/watch?v=qH4pJISKeoI
+- https://spin.atomicobject.com/2017/06/05/tslint-linting-setup/
+- https://github.com/Mercateo/react-with-typescript#stateless-functional-components

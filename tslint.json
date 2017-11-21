@@ -1,5 +1,11 @@
 // other inspiration
 // https://github.com/Microsoft/TypeScript/blob/2f2a82b91dd1286723308b9af0505560491af700/tslint.json
+
+// the genesis of most of my problems
+// https://github.com/palantir/tslint/issues/711
+// Which leads to a TODO: figure out how typedef got enabled.
+// none of the tslint configs I've used set typedef to true
+
 {
   "cliOptions": {
     "exclude": ["/coverage"] // sigh  https://github.com/palantir/tslint/issues/73
@@ -24,6 +30,8 @@
     "no-relative-imports": false,
     "no-import-side-effect": [true, { "ignore-module": "(\\.html|\\.css)$" }],
     "no-unsafe-any": false, // until fix for https://github.com/palantir/tslint/issues/3080
-    "no-implicit-dependencies": [true, "dev"]
+    "no-implicit-dependencies": [true, "dev"],
+    "export-name": false, // I prefer the component folder style i.e. /App/index.ts,
+    "typedef": false // until this gets done https://github.com/palantir/tslint/issues/711#issuecomment-313886382
   }
 }
