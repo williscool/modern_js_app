@@ -23,7 +23,7 @@ function optionallyContainsDecimal(val: string) {
  *
  * @enum {number}
  */
-enum Actions {
+export enum Actions {
   BUY = "Buy",
   SELL = "Sell"
 }
@@ -35,7 +35,7 @@ enum Actions {
  *
  * @enum {number}
  */
-enum Curriences {
+export enum Curriences {
   USD = "USD",
   BTC = "BTC",
   LTC = "LTC"
@@ -44,7 +44,7 @@ enum Curriences {
 /**
  * Its a form in react
  *
- * TODO: need to update this so that part of the constructor input is an enum of the currience
+ * TODO: need to update this so that part of the constructor input is an enum of the curriences
  *
  * and the default base and quote currency
  *
@@ -134,6 +134,7 @@ export class Form extends React.Component {
     return (
       <form>
         <SelectField
+          className="action"
           value={this.state.current_action}
           onChange={(e, i, v) =>
             this.handleSelectFieldChange(e, "current_action", i, v)
@@ -148,6 +149,7 @@ export class Form extends React.Component {
         </SelectField>
         <br />
         <SelectField
+          className="base"
           value={this.state.base}
           onChange={(e, i, v) => this.handleSelectFieldChange(e, "base", i, v)}
           floatingLabelText="Base Currency"
@@ -162,6 +164,7 @@ export class Form extends React.Component {
         </SelectField>
         <br />
         <SelectField
+          className="quote"
           value={this.state.quote}
           onChange={(e, i, v) => this.handleSelectFieldChange(e, "quote", i, v)}
           floatingLabelText="Quote Currency"
@@ -176,6 +179,7 @@ export class Form extends React.Component {
         </SelectField>
         <br />
         <TextField
+          className="amount"
           name="amount"
           hintText="10.00"
           value={this.state.amount}

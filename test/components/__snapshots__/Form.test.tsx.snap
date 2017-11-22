@@ -1,0 +1,1459 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Form />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <SelectField
+          autoWidth={false}
+          className="action"
+          disabled={false}
+          errorText=""
+          floatingLabelFixed={true}
+          floatingLabelText="Action"
+          fullWidth={false}
+          multiple={false}
+          onChange={[Function]}
+          value="Buy"
+        >
+          <MenuItem
+            anchorOrigin={
+              Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+            }
+            checked={false}
+            desktop={false}
+            disabled={false}
+            focusState="none"
+            insetChildren={false}
+            primaryText="Buy"
+            targetOrigin={
+              Object {
+                "horizontal": "left",
+                "vertical": "top",
+              }
+            }
+            value="Buy"
+          />
+          <MenuItem
+            anchorOrigin={
+              Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+            }
+            checked={false}
+            desktop={false}
+            disabled={false}
+            focusState="none"
+            insetChildren={false}
+            primaryText="Sell"
+            targetOrigin={
+              Object {
+                "horizontal": "left",
+                "vertical": "top",
+              }
+            }
+            value="Sell"
+          />
+        </SelectField>,
+        <br />,
+        <SelectField
+          autoWidth={false}
+          className="base"
+          disabled={false}
+          errorText=""
+          floatingLabelFixed={true}
+          floatingLabelText="Base Currency"
+          fullWidth={false}
+          multiple={false}
+          onChange={[Function]}
+          value="USD"
+        >
+          <MenuItem
+            anchorOrigin={
+              Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+            }
+            checked={false}
+            desktop={false}
+            disabled={false}
+            focusState="none"
+            insetChildren={false}
+            primaryText="USD"
+            targetOrigin={
+              Object {
+                "horizontal": "left",
+                "vertical": "top",
+              }
+            }
+            value="USD"
+          />
+          <MenuItem
+            anchorOrigin={
+              Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+            }
+            checked={false}
+            desktop={false}
+            disabled={false}
+            focusState="none"
+            insetChildren={false}
+            primaryText="LTC"
+            targetOrigin={
+              Object {
+                "horizontal": "left",
+                "vertical": "top",
+              }
+            }
+            value="LTC"
+          />
+        </SelectField>,
+        <br />,
+        <SelectField
+          autoWidth={false}
+          className="quote"
+          disabled={false}
+          errorText=""
+          floatingLabelFixed={true}
+          floatingLabelText="Quote Currency"
+          fullWidth={false}
+          multiple={false}
+          onChange={[Function]}
+          value="BTC"
+        >
+          <MenuItem
+            anchorOrigin={
+              Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+            }
+            checked={false}
+            desktop={false}
+            disabled={false}
+            focusState="none"
+            insetChildren={false}
+            primaryText="BTC"
+            targetOrigin={
+              Object {
+                "horizontal": "left",
+                "vertical": "top",
+              }
+            }
+            value="BTC"
+          />
+          <MenuItem
+            anchorOrigin={
+              Object {
+                "horizontal": "right",
+                "vertical": "top",
+              }
+            }
+            checked={false}
+            desktop={false}
+            disabled={false}
+            focusState="none"
+            insetChildren={false}
+            primaryText="LTC"
+            targetOrigin={
+              Object {
+                "horizontal": "left",
+                "vertical": "top",
+              }
+            }
+            value="LTC"
+          />
+        </SelectField>,
+        <br />,
+        <TextField
+          className="amount"
+          disabled={false}
+          errorText=""
+          floatingLabelFixed={true}
+          floatingLabelText="Amount"
+          fullWidth={false}
+          hintText="10.00"
+          multiLine={false}
+          name="amount"
+          onChange={[Function]}
+          rows={1}
+          type="text"
+          underlineShow={true}
+          value=""
+        />,
+        <br />,
+        <br />,
+        <RaisedButton
+          disabled={false}
+          fullWidth={false}
+          label="Submit"
+          labelPosition="after"
+          onClick={[Function]}
+          primary={true}
+          secondary={false}
+        />,
+        <p>
+           
+          {
+  "actions": [
+    "Buy",
+    "Sell"
+  ],
+  "current_action": "Buy",
+  "curriences": [
+    "USD",
+    "BTC",
+    "LTC"
+  ],
+  "base": "USD",
+  "quote": "BTC",
+  "amount": "",
+  "actionErrorText": "",
+  "baseErrorText": "",
+  "quoteErrorText": "",
+  "amountErrorText": ""
+}
+           
+        </p>,
+      ],
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "autoWidth": false,
+          "children": Array [
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="Buy"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="Buy"
+            />,
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="Sell"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="Sell"
+            />,
+          ],
+          "className": "action",
+          "disabled": false,
+          "errorText": "",
+          "floatingLabelFixed": true,
+          "floatingLabelText": "Action",
+          "fullWidth": false,
+          "multiple": false,
+          "onChange": [Function],
+          "value": "Buy",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": "0",
+            "nodeType": "class",
+            "props": Object {
+              "anchorOrigin": Object {
+                "horizontal": "right",
+                "vertical": "top",
+              },
+              "checked": false,
+              "desktop": false,
+              "disabled": false,
+              "focusState": "none",
+              "insetChildren": false,
+              "primaryText": "Buy",
+              "targetOrigin": Object {
+                "horizontal": "left",
+                "vertical": "top",
+              },
+              "value": "Buy",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1",
+            "nodeType": "class",
+            "props": Object {
+              "anchorOrigin": Object {
+                "horizontal": "right",
+                "vertical": "top",
+              },
+              "checked": false,
+              "desktop": false,
+              "disabled": false,
+              "focusState": "none",
+              "insetChildren": false,
+              "primaryText": "Sell",
+              "targetOrigin": Object {
+                "horizontal": "left",
+                "vertical": "top",
+              },
+              "value": "Sell",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": "br",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "autoWidth": false,
+          "children": Array [
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="USD"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="USD"
+            />,
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="LTC"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="LTC"
+            />,
+          ],
+          "className": "base",
+          "disabled": false,
+          "errorText": "",
+          "floatingLabelFixed": true,
+          "floatingLabelText": "Base Currency",
+          "fullWidth": false,
+          "multiple": false,
+          "onChange": [Function],
+          "value": "USD",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": "0",
+            "nodeType": "class",
+            "props": Object {
+              "anchorOrigin": Object {
+                "horizontal": "right",
+                "vertical": "top",
+              },
+              "checked": false,
+              "desktop": false,
+              "disabled": false,
+              "focusState": "none",
+              "insetChildren": false,
+              "primaryText": "USD",
+              "targetOrigin": Object {
+                "horizontal": "left",
+                "vertical": "top",
+              },
+              "value": "USD",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1",
+            "nodeType": "class",
+            "props": Object {
+              "anchorOrigin": Object {
+                "horizontal": "right",
+                "vertical": "top",
+              },
+              "checked": false,
+              "desktop": false,
+              "disabled": false,
+              "focusState": "none",
+              "insetChildren": false,
+              "primaryText": "LTC",
+              "targetOrigin": Object {
+                "horizontal": "left",
+                "vertical": "top",
+              },
+              "value": "LTC",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": "br",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "autoWidth": false,
+          "children": Array [
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="BTC"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="BTC"
+            />,
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="LTC"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="LTC"
+            />,
+          ],
+          "className": "quote",
+          "disabled": false,
+          "errorText": "",
+          "floatingLabelFixed": true,
+          "floatingLabelText": "Quote Currency",
+          "fullWidth": false,
+          "multiple": false,
+          "onChange": [Function],
+          "value": "BTC",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": "0",
+            "nodeType": "class",
+            "props": Object {
+              "anchorOrigin": Object {
+                "horizontal": "right",
+                "vertical": "top",
+              },
+              "checked": false,
+              "desktop": false,
+              "disabled": false,
+              "focusState": "none",
+              "insetChildren": false,
+              "primaryText": "BTC",
+              "targetOrigin": Object {
+                "horizontal": "left",
+                "vertical": "top",
+              },
+              "value": "BTC",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          Object {
+            "instance": null,
+            "key": "1",
+            "nodeType": "class",
+            "props": Object {
+              "anchorOrigin": Object {
+                "horizontal": "right",
+                "vertical": "top",
+              },
+              "checked": false,
+              "desktop": false,
+              "disabled": false,
+              "focusState": "none",
+              "insetChildren": false,
+              "primaryText": "LTC",
+              "targetOrigin": Object {
+                "horizontal": "left",
+                "vertical": "top",
+              },
+              "value": "LTC",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": "br",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "className": "amount",
+          "disabled": false,
+          "errorText": "",
+          "floatingLabelFixed": true,
+          "floatingLabelText": "Amount",
+          "fullWidth": false,
+          "hintText": "10.00",
+          "multiLine": false,
+          "name": "amount",
+          "onChange": [Function],
+          "rows": 1,
+          "type": "text",
+          "underlineShow": true,
+          "value": "",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": "br",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {},
+        "ref": null,
+        "rendered": null,
+        "type": "br",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "disabled": false,
+          "fullWidth": false,
+          "label": "Submit",
+          "labelPosition": "after",
+          "onClick": [Function],
+          "primary": true,
+          "secondary": false,
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            " ",
+            "{
+  \\"actions\\": [
+    \\"Buy\\",
+    \\"Sell\\"
+  ],
+  \\"current_action\\": \\"Buy\\",
+  \\"curriences\\": [
+    \\"USD\\",
+    \\"BTC\\",
+    \\"LTC\\"
+  ],
+  \\"base\\": \\"USD\\",
+  \\"quote\\": \\"BTC\\",
+  \\"amount\\": \\"\\",
+  \\"actionErrorText\\": \\"\\",
+  \\"baseErrorText\\": \\"\\",
+  \\"quoteErrorText\\": \\"\\",
+  \\"amountErrorText\\": \\"\\"
+}",
+            " ",
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          " ",
+          "{
+  \\"actions\\": [
+    \\"Buy\\",
+    \\"Sell\\"
+  ],
+  \\"current_action\\": \\"Buy\\",
+  \\"curriences\\": [
+    \\"USD\\",
+    \\"BTC\\",
+    \\"LTC\\"
+  ],
+  \\"base\\": \\"USD\\",
+  \\"quote\\": \\"BTC\\",
+  \\"amount\\": \\"\\",
+  \\"actionErrorText\\": \\"\\",
+  \\"baseErrorText\\": \\"\\",
+  \\"quoteErrorText\\": \\"\\",
+  \\"amountErrorText\\": \\"\\"
+}",
+          " ",
+        ],
+        "type": "p",
+      },
+    ],
+    "type": "form",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <SelectField
+            autoWidth={false}
+            className="action"
+            disabled={false}
+            errorText=""
+            floatingLabelFixed={true}
+            floatingLabelText="Action"
+            fullWidth={false}
+            multiple={false}
+            onChange={[Function]}
+            value="Buy"
+          >
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="Buy"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="Buy"
+            />
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="Sell"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="Sell"
+            />
+          </SelectField>,
+          <br />,
+          <SelectField
+            autoWidth={false}
+            className="base"
+            disabled={false}
+            errorText=""
+            floatingLabelFixed={true}
+            floatingLabelText="Base Currency"
+            fullWidth={false}
+            multiple={false}
+            onChange={[Function]}
+            value="USD"
+          >
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="USD"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="USD"
+            />
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="LTC"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="LTC"
+            />
+          </SelectField>,
+          <br />,
+          <SelectField
+            autoWidth={false}
+            className="quote"
+            disabled={false}
+            errorText=""
+            floatingLabelFixed={true}
+            floatingLabelText="Quote Currency"
+            fullWidth={false}
+            multiple={false}
+            onChange={[Function]}
+            value="BTC"
+          >
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="BTC"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="BTC"
+            />
+            <MenuItem
+              anchorOrigin={
+                Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                }
+              }
+              checked={false}
+              desktop={false}
+              disabled={false}
+              focusState="none"
+              insetChildren={false}
+              primaryText="LTC"
+              targetOrigin={
+                Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                }
+              }
+              value="LTC"
+            />
+          </SelectField>,
+          <br />,
+          <TextField
+            className="amount"
+            disabled={false}
+            errorText=""
+            floatingLabelFixed={true}
+            floatingLabelText="Amount"
+            fullWidth={false}
+            hintText="10.00"
+            multiLine={false}
+            name="amount"
+            onChange={[Function]}
+            rows={1}
+            type="text"
+            underlineShow={true}
+            value=""
+          />,
+          <br />,
+          <br />,
+          <RaisedButton
+            disabled={false}
+            fullWidth={false}
+            label="Submit"
+            labelPosition="after"
+            onClick={[Function]}
+            primary={true}
+            secondary={false}
+          />,
+          <p>
+             
+            {
+  "actions": [
+    "Buy",
+    "Sell"
+  ],
+  "current_action": "Buy",
+  "curriences": [
+    "USD",
+    "BTC",
+    "LTC"
+  ],
+  "base": "USD",
+  "quote": "BTC",
+  "amount": "",
+  "actionErrorText": "",
+  "baseErrorText": "",
+  "quoteErrorText": "",
+  "amountErrorText": ""
+}
+             
+          </p>,
+        ],
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "autoWidth": false,
+            "children": Array [
+              <MenuItem
+                anchorOrigin={
+                  Object {
+                    "horizontal": "right",
+                    "vertical": "top",
+                  }
+                }
+                checked={false}
+                desktop={false}
+                disabled={false}
+                focusState="none"
+                insetChildren={false}
+                primaryText="Buy"
+                targetOrigin={
+                  Object {
+                    "horizontal": "left",
+                    "vertical": "top",
+                  }
+                }
+                value="Buy"
+              />,
+              <MenuItem
+                anchorOrigin={
+                  Object {
+                    "horizontal": "right",
+                    "vertical": "top",
+                  }
+                }
+                checked={false}
+                desktop={false}
+                disabled={false}
+                focusState="none"
+                insetChildren={false}
+                primaryText="Sell"
+                targetOrigin={
+                  Object {
+                    "horizontal": "left",
+                    "vertical": "top",
+                  }
+                }
+                value="Sell"
+              />,
+            ],
+            "className": "action",
+            "disabled": false,
+            "errorText": "",
+            "floatingLabelFixed": true,
+            "floatingLabelText": "Action",
+            "fullWidth": false,
+            "multiple": false,
+            "onChange": [Function],
+            "value": "Buy",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": "0",
+              "nodeType": "class",
+              "props": Object {
+                "anchorOrigin": Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                },
+                "checked": false,
+                "desktop": false,
+                "disabled": false,
+                "focusState": "none",
+                "insetChildren": false,
+                "primaryText": "Buy",
+                "targetOrigin": Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                },
+                "value": "Buy",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1",
+              "nodeType": "class",
+              "props": Object {
+                "anchorOrigin": Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                },
+                "checked": false,
+                "desktop": false,
+                "disabled": false,
+                "focusState": "none",
+                "insetChildren": false,
+                "primaryText": "Sell",
+                "targetOrigin": Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                },
+                "value": "Sell",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": "br",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "autoWidth": false,
+            "children": Array [
+              <MenuItem
+                anchorOrigin={
+                  Object {
+                    "horizontal": "right",
+                    "vertical": "top",
+                  }
+                }
+                checked={false}
+                desktop={false}
+                disabled={false}
+                focusState="none"
+                insetChildren={false}
+                primaryText="USD"
+                targetOrigin={
+                  Object {
+                    "horizontal": "left",
+                    "vertical": "top",
+                  }
+                }
+                value="USD"
+              />,
+              <MenuItem
+                anchorOrigin={
+                  Object {
+                    "horizontal": "right",
+                    "vertical": "top",
+                  }
+                }
+                checked={false}
+                desktop={false}
+                disabled={false}
+                focusState="none"
+                insetChildren={false}
+                primaryText="LTC"
+                targetOrigin={
+                  Object {
+                    "horizontal": "left",
+                    "vertical": "top",
+                  }
+                }
+                value="LTC"
+              />,
+            ],
+            "className": "base",
+            "disabled": false,
+            "errorText": "",
+            "floatingLabelFixed": true,
+            "floatingLabelText": "Base Currency",
+            "fullWidth": false,
+            "multiple": false,
+            "onChange": [Function],
+            "value": "USD",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": "0",
+              "nodeType": "class",
+              "props": Object {
+                "anchorOrigin": Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                },
+                "checked": false,
+                "desktop": false,
+                "disabled": false,
+                "focusState": "none",
+                "insetChildren": false,
+                "primaryText": "USD",
+                "targetOrigin": Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                },
+                "value": "USD",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1",
+              "nodeType": "class",
+              "props": Object {
+                "anchorOrigin": Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                },
+                "checked": false,
+                "desktop": false,
+                "disabled": false,
+                "focusState": "none",
+                "insetChildren": false,
+                "primaryText": "LTC",
+                "targetOrigin": Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                },
+                "value": "LTC",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": "br",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "autoWidth": false,
+            "children": Array [
+              <MenuItem
+                anchorOrigin={
+                  Object {
+                    "horizontal": "right",
+                    "vertical": "top",
+                  }
+                }
+                checked={false}
+                desktop={false}
+                disabled={false}
+                focusState="none"
+                insetChildren={false}
+                primaryText="BTC"
+                targetOrigin={
+                  Object {
+                    "horizontal": "left",
+                    "vertical": "top",
+                  }
+                }
+                value="BTC"
+              />,
+              <MenuItem
+                anchorOrigin={
+                  Object {
+                    "horizontal": "right",
+                    "vertical": "top",
+                  }
+                }
+                checked={false}
+                desktop={false}
+                disabled={false}
+                focusState="none"
+                insetChildren={false}
+                primaryText="LTC"
+                targetOrigin={
+                  Object {
+                    "horizontal": "left",
+                    "vertical": "top",
+                  }
+                }
+                value="LTC"
+              />,
+            ],
+            "className": "quote",
+            "disabled": false,
+            "errorText": "",
+            "floatingLabelFixed": true,
+            "floatingLabelText": "Quote Currency",
+            "fullWidth": false,
+            "multiple": false,
+            "onChange": [Function],
+            "value": "BTC",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": "0",
+              "nodeType": "class",
+              "props": Object {
+                "anchorOrigin": Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                },
+                "checked": false,
+                "desktop": false,
+                "disabled": false,
+                "focusState": "none",
+                "insetChildren": false,
+                "primaryText": "BTC",
+                "targetOrigin": Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                },
+                "value": "BTC",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+            Object {
+              "instance": null,
+              "key": "1",
+              "nodeType": "class",
+              "props": Object {
+                "anchorOrigin": Object {
+                  "horizontal": "right",
+                  "vertical": "top",
+                },
+                "checked": false,
+                "desktop": false,
+                "disabled": false,
+                "focusState": "none",
+                "insetChildren": false,
+                "primaryText": "LTC",
+                "targetOrigin": Object {
+                  "horizontal": "left",
+                  "vertical": "top",
+                },
+                "value": "LTC",
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": "br",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "className": "amount",
+            "disabled": false,
+            "errorText": "",
+            "floatingLabelFixed": true,
+            "floatingLabelText": "Amount",
+            "fullWidth": false,
+            "hintText": "10.00",
+            "multiLine": false,
+            "name": "amount",
+            "onChange": [Function],
+            "rows": 1,
+            "type": "text",
+            "underlineShow": true,
+            "value": "",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": "br",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {},
+          "ref": null,
+          "rendered": null,
+          "type": "br",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "disabled": false,
+            "fullWidth": false,
+            "label": "Submit",
+            "labelPosition": "after",
+            "onClick": [Function],
+            "primary": true,
+            "secondary": false,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              " ",
+              "{
+  \\"actions\\": [
+    \\"Buy\\",
+    \\"Sell\\"
+  ],
+  \\"current_action\\": \\"Buy\\",
+  \\"curriences\\": [
+    \\"USD\\",
+    \\"BTC\\",
+    \\"LTC\\"
+  ],
+  \\"base\\": \\"USD\\",
+  \\"quote\\": \\"BTC\\",
+  \\"amount\\": \\"\\",
+  \\"actionErrorText\\": \\"\\",
+  \\"baseErrorText\\": \\"\\",
+  \\"quoteErrorText\\": \\"\\",
+  \\"amountErrorText\\": \\"\\"
+}",
+              " ",
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            " ",
+            "{
+  \\"actions\\": [
+    \\"Buy\\",
+    \\"Sell\\"
+  ],
+  \\"current_action\\": \\"Buy\\",
+  \\"curriences\\": [
+    \\"USD\\",
+    \\"BTC\\",
+    \\"LTC\\"
+  ],
+  \\"base\\": \\"USD\\",
+  \\"quote\\": \\"BTC\\",
+  \\"amount\\": \\"\\",
+  \\"actionErrorText\\": \\"\\",
+  \\"baseErrorText\\": \\"\\",
+  \\"quoteErrorText\\": \\"\\",
+  \\"amountErrorText\\": \\"\\"
+}",
+            " ",
+          ],
+          "type": "p",
+        },
+      ],
+      "type": "form",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

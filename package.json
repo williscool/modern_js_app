@@ -14,7 +14,9 @@
     "format": "prettier --write .",
     "lint":
       "eslint src webpack.config.babel.js --ext .js && tslint -p . && ./node_modules/stylelint/bin/stylelint.js 'src/**/*.css'",
-    "test": "yarn format && yarn lint && jest --coverage",
+    "test": "yarn format && yarn lint && yarn jest",
+    "jest": "jest --coverage",
+    "jest:updateSnapshots": "jest -u",
     "precommit": "yarn test",
     "prepush": "yarn test && yarn prod:build"
   },

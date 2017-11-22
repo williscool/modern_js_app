@@ -38,8 +38,7 @@ left
 
 ## p0
 
-- test form has x inputs, when you change stuff their values change, and that you can't invalid and you can input valid input
-- figure out a way to ban currencies from consideration
+- and that you can't invalid and you can input valid input (would just test this in a seperate unit test)
 - (mock the api respone json to test our algorithm with)
 - use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
 - hit the api. copy resp with chrome `copy` use it to make mock data to test algorithm on 
@@ -61,6 +60,7 @@ left
 - leave redux for last  (figure out what thunks and sagas are) https://github.com/redux-saga
 
 ## p2 (things I would do in the future) 
+- use a number formatting (i.e. adding commas and dollar sign) input ala https://github.com/s-yadav/react-number-format
 - add a router if the app needed multiple pages
 - internationalize
 
@@ -116,6 +116,9 @@ left
 - once we get the form working. just print it out in the ui under the form
 - The application should be a client-side application that does not depend on a server. All API requests,
   form processing, and result display should be done client side in the browser.
+- test form has x inputs,  (covered by snapshots)
+- when you change stuff their values change (that would be testing the framework react and material ui handle that for us)
+- figure out a way to ban currencies from consideration
 
 
 
