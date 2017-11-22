@@ -3,17 +3,17 @@ import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 import TextField from "material-ui/TextField";
 import * as React from "react";
+import * as validator from "validator";
 
 /**
- * How is this not built into the language?
- * https://stackoverflow.com/a/21294925/511710
- * https://noahbass.com/posts/typescript-enum-iteration
+ * Check if a decimal appears in the input 0 or 1 times
  *
- * @param {{}} e
- * @returns
+ * How is this not built into a library?
+ * @param {string} val
+ * @returns {boolean}
  */
-function filterEnum(e: {}) {
-  return Object.keys(e).filter(v => isNaN(Number(v)));
+function optionallyContainsDecimal(val: string) {
+  return val.split("").filter((char, i) => char === ".").length <= 1;
 }
 
 /**
@@ -24,11 +24,9 @@ function filterEnum(e: {}) {
  * @enum {number}
  */
 enum Actions {
-  Buy,
-  Sell
+  BUY = "Buy",
+  SELL = "Sell"
 }
-
-const ACTION_TYPES = filterEnum(Actions);
 
 /**
  * Delinates the currency types.
@@ -38,15 +36,17 @@ const ACTION_TYPES = filterEnum(Actions);
  * @enum {number}
  */
 enum Curriences {
-  USD,
-  BTC,
-  LTC
+  USD = "USD",
+  BTC = "BTC",
+  LTC = "LTC"
 }
-
-const CURRENCY_TYPES = filterEnum(Curriences);
 
 /**
  * Its a form in react
+ *
+ * TODO: need to update this so that part of the constructor input is an enum of the currience
+ *
+ * and the default base and quote currency
  *
  * @export
  * @class Form
@@ -59,13 +59,18 @@ export class Form extends React.Component {
    *
    * @memberof Form
    */
+
   public state = {
-    actions: ACTION_TYPES,
-    curriences: CURRENCY_TYPES,
-    action_index: Actions.Buy,
-    base_currency_index: Curriences.USD,
-    quote_currency_index: Curriences.BTC,
-    amount: 0.0
+    actions: Object.keys(Actions).map(k => Actions[k]),
+    current_action: Actions.BUY,
+    curriences: Object.keys(Curriences).map(k => Curriences[k]),
+    base: Curriences.USD,
+    quote: Curriences.BTC,
+    amount: "",
+    actionErrorText: "",
+    baseErrorText: "",
+    quoteErrorText: "",
+    amountErrorText: ""
   };
 
   /**
@@ -95,15 +100,16 @@ export class Form extends React.Component {
     e: React.FormEvent<{}>,
     value: string
   ) => {
-    let amt = Number(value);
-
-    if (isNaN(amt)) {
-      amt = 0;
+    // allows the input to be empty, or optionally have a decimal as long as its a number
+    if (
+      value === "" ||
+      optionallyContainsDecimal(value) ||
+      validator.isNumeric(value)
+    ) {
+      this.setState({
+        amount: value
+      });
     }
-
-    this.setState({
-      amount: Number(value)
-    });
   };
   /**
    * Submit handler for form
@@ -128,44 +134,46 @@ export class Form extends React.Component {
     return (
       <form>
         <SelectField
-          value={this.state.action_index}
+          value={this.state.current_action}
           onChange={(e, i, v) =>
-            this.handleSelectFieldChange(e, "action_index", i, v)
+            this.handleSelectFieldChange(e, "current_action", i, v)
           }
           floatingLabelText="Action"
           floatingLabelFixed={true}
+          errorText={this.state.actionErrorText}
         >
-          {this.state.actions.map((v, i) => {
-            return <MenuItem key={i} value={i} primaryText={v} />;
+          {this.state.actions.map((v: string, i) => {
+            return <MenuItem key={i} value={v} primaryText={v} />;
           })}
         </SelectField>
         <br />
         <SelectField
-          value={this.state.base_currency_index}
-          onChange={(e, i, v) =>
-            this.handleSelectFieldChange(e, "base_currency_index", i, v)
-          }
+          value={this.state.base}
+          onChange={(e, i, v) => this.handleSelectFieldChange(e, "base", i, v)}
           floatingLabelText="Base Currency"
           floatingLabelFixed={true}
+          errorText={this.state.baseErrorText}
         >
-          {this.state.curriences.map((v, i) => {
-            return <MenuItem key={i} value={i} primaryText={v} />;
-          })}
+          {this.state.curriences
+            .filter(v => v !== this.state.quote)
+            .map((v, i) => {
+              return <MenuItem key={i} value={v} primaryText={v} />;
+            })}
         </SelectField>
         <br />
         <SelectField
-          value={this.state.quote_currency_index}
-          onChange={(e, i, v) =>
-            this.handleSelectFieldChange(e, "quote_currency_index", i, v)
-          }
+          value={this.state.quote}
+          onChange={(e, i, v) => this.handleSelectFieldChange(e, "quote", i, v)}
           floatingLabelText="Quote Currency"
           floatingLabelFixed={true}
+          errorText={this.state.quoteErrorText}
         >
-          {this.state.curriences.map((v, i) => {
-            return <MenuItem key={i} value={i} primaryText={v} />;
-          })}
+          {this.state.curriences
+            .filter(v => v !== this.state.base)
+            .map((v, i) => {
+              return <MenuItem key={i} value={v} primaryText={v} />;
+            })}
         </SelectField>
-        <br />
         <br />
         <TextField
           name="amount"
@@ -174,7 +182,9 @@ export class Form extends React.Component {
           onChange={(e, v) => this.handleAmountTextFieldChange(e, v)}
           floatingLabelText="Amount"
           floatingLabelFixed={true}
+          errorText={this.state.amountErrorText}
         />
+        <br />
         <br />
         <RaisedButton
           label="Submit"

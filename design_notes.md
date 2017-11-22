@@ -1,23 +1,14 @@
 # Currency Exchange Quotes
 
+left
 
-
-## Pre
-
-- get a good looking form from codepen
-
-
-
+- hit api get data
+- make sure ui around that is good
+- form validation
+- use it to print out stuff
+- write tests (just that form displays inputs.  extensive unit tests )
 
 ## I/O
-
-
-### form input field follow (all strings)
-
-- action ('buy' or 'sell') 
-- base_currency (The currency to be bought or sold), 
-- quote_currency (The currency to quote the price in)
-- amount (The amount of the base currency to be traded)
 
 ### form output field follow (all strings)
 
@@ -29,8 +20,6 @@
 
 - Your goal is to build a client-side web application that provides quotes for digital currency trades using
   data from the GDAX orderbook.
-- (mock the api respone json to test our algorithm with)
-- use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
 - GDAX, the digital currency exchange operated by Coinbase, maintains an order book for each tradable
   currency pair (eg. BTC-USD).
 - An order book is comprised of a series of bids (offers to buy) and asks (offers to sell).
@@ -49,22 +38,21 @@
 
 ## p0
 
-- folder per component with its css and etc. in there too. (imported at the top)
-- once we get the form working. just print it out in the ui under the form
-- once we get that done then we need to fit this api and make sure we've got some kind of loading animation
+- test form has x inputs, when you change stuff their values change, and that you can't invalid and you can input valid input
+- figure out a way to ban currencies from consideration
+- (mock the api respone json to test our algorithm with)
+- use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
+- hit the api. copy resp with chrome `copy` use it to make mock data to test algorithm on 
+- make sure we've got some kind of loading animation
 - let user know we are crunching data once we get it back if it takes  a while 
-- ​
-- https://www.youtube.com/watch?v=qH4pJISKeoI
-- The application should be a client-side application that does not depend on a server. All API requests,
-  form processing, and result display should be done client side in the browser. You should also write
-  unit tests to ensure the logic functions correctly.
+- You should also write unit tests to ensure the logic functions correctly.
 - The application should consist of a single form that accepts 4 inputs and displays 3 outputs.
 - If there are any errors processing the request, the form should display the error. https://docs.gdax.com/#errors (make sure to test this part with mocks / fake requests)
 - Try to make the form intuitive and protect the user from common errors.
 - The application should be able to quote trades between any two currencies which have an orderbook
   on GDAX.
 - It should also be able to support trades where the base and quote currencies are the inverse of a GDAX trading pair. For example, the application should be able to quote a buy of BTC (base currency) using ETH (quote currency) or LTC (quote currency), even though the available GDAX orderbooks are ETH-BTC and LTC-BTC.
-- find a nice theme for it
+- https://github.com/chriso/validator.js
 - product types https://docs.gdax.com/#get-products
 
 ## p1
@@ -74,7 +62,7 @@
 
 ## p2 (things I would do in the future) 
 - add a router if the app needed multiple pages
-- ​
+- internationalize
 
 ## Clarification questions
 
@@ -111,6 +99,24 @@
 
 ## Done
 
+### form io
+
+#### form input field follow (all strings)
+
+- action ('buy' or 'sell') 
+- base_currency (The currency to be bought or sold), 
+- quote_currency (The currency to quote the price in)
+- amount (The amount of the base currency to be traded)
+
+
+
+### P0
+
+- folder per component with its css and etc. in there too. (imported at the top)
+- once we get the form working. just print it out in the ui under the form
+- The application should be a client-side application that does not depend on a server. All API requests,
+  form processing, and result display should be done client side in the browser.
+
 
 
 ### Pre
@@ -121,6 +127,7 @@
 - tslint and airbnb config
 - prettier (make sure to pin it to an exact realease!)
 - make sure we can build here
+- find a nice theme for it ( good looking form from material ui)
 
 
 
