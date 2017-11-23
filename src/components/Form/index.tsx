@@ -3,18 +3,7 @@ import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 import TextField from "material-ui/TextField";
 import * as React from "react";
-import * as validator from "validator";
-
-/**
- * Check if a decimal appears in the input 0 or 1 times
- *
- * How is this not built into a library?
- * @param {string} val
- * @returns {boolean}
- */
-function optionallyContainsDecimal(val: string) {
-  return val.split("").filter((char, i) => char === ".").length <= 1;
-}
+import { amountIsValid } from "../../utils/amountIsValid";
 
 /**
  * Delinates the action for the currencies
@@ -91,7 +80,16 @@ export class Form extends React.Component {
   };
 
   /**
-   * Take the value from the
+   * Validate the currency amount input
+   *
+   * I got a lot of my inspiration from how this input works from
+   *
+   * https://secure.ally.com/#/bank/transfer-funds
+   *
+   * I hate trying to type into text boxes that wont let you type intermediate somewhat invalid input
+   * while you get to a valid value so I looked to a place that I feel has good UX around that
+   *
+   * On submit I will use parseFloat to strip out any leading zeros
    *
    * @private
    * @memberof Form
@@ -101,11 +99,8 @@ export class Form extends React.Component {
     value: string
   ) => {
     // allows the input to be empty, or optionally have a decimal as long as its a number
-    if (
-      value === "" ||
-      optionallyContainsDecimal(value) ||
-      validator.isNumeric(value)
-    ) {
+    if (amountIsValid(value)) {
+      // now that we know we have a valid value remove
       this.setState({
         amount: value
       });
