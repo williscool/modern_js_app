@@ -34,6 +34,7 @@ function isNegativeZero(x: number) {
  *
  * @export
  * @param {string} value
+ * @returns {boolean} whether or not the string is a valid amount
  */
 export function amountIsValid(value: string | number) {
   if (value === "") return true;
