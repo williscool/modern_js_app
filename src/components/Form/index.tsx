@@ -4,18 +4,7 @@ import SelectField from "material-ui/SelectField";
 import TextField from "material-ui/TextField";
 import * as React from "react";
 import { amountIsValid } from "../../utils/amountIsValid";
-
-/**
- * Delinates the action for the currencies
- *
- * Done this way you could add new Actions easily
- *
- * @enum {number}
- */
-export enum Actions {
-  BUY = "Buy",
-  SELL = "Sell"
-}
+import { Actions } from "../../utils/utilities";
 
 /**
  * Delinates the currency types.

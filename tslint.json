@@ -41,6 +41,7 @@
     "no-suspicious-comment": false, // designed to only really be used right before a release
     "no-void-expression": false,
     "no-submodule-imports": false,
-    "curly": [true, "ignore-same-line"]
+    "curly": [true, "ignore-same-line"],
+    "prefer-for-of": false
   }
 }

@@ -38,11 +38,13 @@ left
 
 ## p0
 
-- and that you can't invalid and you can input valid input (would just test this in a seperate unit test)
+- there will be a gdax service at `gdax.ts` and that will use `utils` the process the response from the gdax api . the service should also handle errors and such
+- test quote algo
+- On load I would have loading thing that tells the user we are getting product types
+- Use curency hash to build what is in the base and quote currrency dropdowns
 - (mock the api respone json to test our algorithm with)
 - use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
-- hit the api. copy resp with chrome `copy` use it to make mock data to test algorithm on 
-- make sure we've got some kind of loading animation
+- make sure we've got some kind of loading animation for when it is processing for the quote
 - let user know we are crunching data once we get it back if it takes  a while 
 - You should also write unit tests to ensure the logic functions correctly.
 - The application should consist of a single form that accepts 4 inputs and displays 3 outputs.
@@ -51,11 +53,12 @@ left
 - The application should be able to quote trades between any two currencies which have an orderbook
   on GDAX.
 - It should also be able to support trades where the base and quote currencies are the inverse of a GDAX trading pair. For example, the application should be able to quote a buy of BTC (base currency) using ETH (quote currency) or LTC (quote currency), even though the available GDAX orderbooks are ETH-BTC and LTC-BTC.
-- https://github.com/chriso/validator.js
 - product types https://docs.gdax.com/#get-products
+- ship it to netlify
 
 ## p1
 
+- setup hot module reload https://frontendmasters.com/courses/react/setting-up-hmr
 - tracking (for when a user clicks, compares, prices of stuff, etc.)
 - leave redux for last  (figure out what thunks and sagas are) https://github.com/redux-saga
 
@@ -93,7 +96,7 @@ left
 
 - answer only needs to work in latest chrome
 - no exchange through another currency
-- weighted avg though was correct
+- weighted avg thought was correct
 
 
 
@@ -119,6 +122,10 @@ left
 - test form has x inputs,  (covered by snapshots)
 - when you change stuff their values change (that would be testing the framework react and material ui handle that for us)
 - figure out a way to ban currencies from consideration
+- https://github.com/chriso/validator.js
+- (would just test this in a seperate unit test) test that you can't invalid and you can input valid input in the amount section 
+- hit the api. copy resp with chrome `copy` use it to make mock data to test algorithm on (do it for 1 product type too. algorithm will work on all once we have one)
+- once you have teh product types build an object where the keys are the currency types and the values are the currences it can be converted to. 
 
 
 
@@ -131,8 +138,6 @@ left
 - prettier (make sure to pin it to an exact realease!)
 - make sure we can build here
 - find a nice theme for it ( good looking form from material ui)
-
-
 
 
 
@@ -168,3 +173,5 @@ left
 - [How to code a form in React by Ben Awad on Youtube](https://www.youtube.com/playlist?list=PLN3n1USn4xllZIJyrGvCu5ihs2GoMtk1Q)
 - https://stackoverflow.com/questions/37186500/how-to-setup-material-ui-for-react-with-typescript/37412793#37412793
 - https://github.com/ReactTraining/react-router/issues/4477#issuecomment-286187737
+- https://medium.com/@yoniweisbrod/interacting-with-apis-using-react-native-fetch-9733f28566bb
+- https://stackoverflow.com/a/36636368/511710

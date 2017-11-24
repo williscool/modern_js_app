@@ -1,6 +1,8 @@
 {
-  "sequence": 4410234309,
+  "sequence": 4410234309, // what sequence means https://docs.gdax.com/?javascript#subscribe
   "bids": [
+    // bids mean. At x price (in quote currency) their is buy Y bitcoin (or quote currency) and z outstanding orders
+    // price, size, num-orders
     ["8179", "0.09125942", 1],
     ["8177.77", "0.01", 1],
     ["8176.31", "0.0333", 1],
@@ -53,6 +55,7 @@
     ["8157.53", "0.01", 1]
   ],
   "asks": [
+    // asks means at X price there is Y bitcoin to sell and Z outstanding orders
     ["8179.01", "74.97206333", 50],
     ["8179.02", "1.25304258", 4],
     ["8179.05", "2.22248", 2],
