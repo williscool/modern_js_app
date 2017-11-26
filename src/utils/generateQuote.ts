@@ -14,6 +14,93 @@ export interface GdaxOrderBook {
   asks: [GdaxOrderBookEntry];
 }
 
+interface OrderSanityCheck {
+  fillable: boolean;
+  priceIndicies: number[];
+  remainingAmount: number;
+}
+
+/**
+ * Checks to see that give an amount and an order book we can fill the input order with said book
+ *
+ * @param {number} amount amount desired
+ * @param {[GdaxOrderBookEntry]} openOrders asks or bids
+ * @returns {Object} if the quote is fillable, the indicies in the orderbook of prices used, and the amount remaining
+ */
+function orderIsFillable(amount: number, openOrders: [GdaxOrderBookEntry]) {
+  // start off assuming we cannot cover the whole desired amount
+  // with total amount of base cur (BTC) availble at the first price
+  let fillable = false;
+  const priceIndicies: number[] = [];
+  let remainingAmount = amount;
+
+  for (let i = 0; i <= openOrders.length - 1; i += 1) {
+    priceIndicies.push(i);
+    const [, size] = openOrders[i];
+
+    const numSize = parseFloat(size);
+
+    remainingAmount -= numSize;
+
+    if (remainingAmount <= 0) {
+      // stop once we've seen enough currency to cover the order
+      break;
+    }
+  }
+
+  if (remainingAmount <= 0) {
+    fillable = true;
+  }
+
+  return {
+    fillable,
+    priceIndicies,
+    remainingAmount
+  };
+}
+
+/**
+ * Weighted avg of the prices
+ * https://www.investopedia.com/terms/w/weightedaverage.asp
+ *
+ * @param {number[]} priceIndicies indices in order book of prices used to cover order
+ * @param {GdaxOrderBookEntry[]} openOrders asks or bids
+ * @param {number} remainingAmount amount remaining that needs to be covered partially by the last order
+ * @returns {number} weighted avg quote of prices
+ */
+function calculateWeightedAvgPrice(
+  priceIndicies: number[],
+  openOrders: GdaxOrderBookEntry[],
+  remainingAmount: number
+) {
+  let totalOrders = 0;
+
+  let numQuote = priceIndicies
+    .map((priceIndex, i, arr) => {
+      const [price, size, orders] = openOrders[priceIndex];
+      const numSize = parseFloat(size);
+      const numPrice = parseFloat(price);
+      let numOrders = orders;
+
+      if (i === arr.length - 1 && remainingAmount !== 0) {
+        // we only used a fraction of the orders out at the last price
+        // https://www.mathsisfun.com/definitions/decimal-fraction.html
+        //
+        // also remainingAmount is negative since we subtract the size from it
+        // so we negate it to get a positive
+        const decmialFraction = -remainingAmount / numSize; //
+        numOrders = numOrders * decmialFraction;
+      }
+
+      totalOrders += numOrders;
+
+      return numPrice * numOrders;
+    })
+    .reduce((prev, num) => prev + num);
+
+  return (numQuote /= totalOrders);
+}
+
 /**
  * The application should use the orderbook to determine the best price
  *
@@ -31,9 +118,8 @@ export interface GdaxOrderBook {
  * @param {Actions} action
  * @param {number} amount
  *
- * @returns {number} quote
+ * @returns {Object} members tell if the order is fillable, quote price, and the total amount
  */
-// tslint:disable-next-line:max-func-body-length
 export function generateQuote(
   ob: GdaxOrderBook,
   tb: QuoteCurrency,
@@ -54,7 +140,13 @@ export function generateQuote(
    * 2. we can EXACTLY fill the order with the open asks or bids
    * 3. we can fill the order but only use a fraction of the orders out at the last price.
    */
-  let quote = "";
+  let orderSanityCheck: OrderSanityCheck = {
+    fillable: false,
+    priceIndicies: [-1],
+    remainingAmount: 0
+  };
+  let quotePrice = 0;
+  let total = 0;
 
   /**
    * Aggregated levels return only one size for each active price
@@ -66,79 +158,43 @@ export function generateQuote(
    * you end up using a weighted avg of all of the prices you have to use fill the quote
    */
 
-  if (tb === QuoteCurrency.QUOTE && action === Actions.BUY) {
+  if (action === Actions.BUY) {
     // user request quote for a BUY for the base currency (BTC in the mock) in the quote currency (in the mock USD)
     // this means the input amount will be BTC and the quote amount will be USD
     //
     // so we go through asks until we can fill the order
     // ob.asks do some stuff
+    orderSanityCheck = orderIsFillable(amount, ob.asks);
 
-    // start off assuming we can cover the whole desired amount
-    // with total amount of base cur (BTC) availble at the first price
-    const priceIndicies = [];
-    let remainingAmount = amount;
-
-    for (let i = 0; i <= ob.asks.length - 1; i += 1) {
-      priceIndicies.push(i);
-      const [, size] = ob.asks[i];
-
-      const numSize = parseFloat(size);
-
-      remainingAmount -= numSize;
-      if (remainingAmount <= 0) {
-        break;
-      }
-    }
-
-    // after the initial for loop several cases can be true
+    // after orderIsFillable several cases can be true
 
     // remainingAmount > 0
     // ^ this means there was not enough open asks to cover the quote
-    // TODO: show some kinda error or show a quote for as much as possible and the short fall
+    // which mean fillable will be false
 
-    // remainingAmount <= 0
-    // ^ this means we covered the whole amount the user wanted to get quoted
-    // so now we are returning them a weighted average as a quote
-    //
-    // https://www.investopedia.com/terms/w/weightedaverage.asp
+    if (orderSanityCheck.fillable) {
+      // remainingAmount <= 0
+      // ^ this means we covered the whole amount the user wanted to get quoted
+      // so now we can calculate a weighted average for a quote price
+      quotePrice = calculateWeightedAvgPrice(
+        orderSanityCheck.priceIndicies,
+        ob.asks,
+        orderSanityCheck.remainingAmount
+      );
 
-    let totalOrders = 0;
+      if (tb !== QuoteCurrency.QUOTE) {
+        // tb === QuoteCurrency.BASE
+        // a BUY for the quote cur (USD) in the base (BTC)
+        // input amount === USD output === BTC
+        // here we use the orig algoritm to get the weight avg BTC price.
+        // since the order book is BTC->USD we can do 1/Price to get the price per dollar of btc.
+        // that is the quote price. multple that by the desired input amount and bang ur done.
 
-    let numQuote = priceIndicies
-      .map((priceIndex, i, arr) => {
-        const [price, size, orders] = ob.asks[priceIndex];
-        const numSize = parseFloat(size);
-        const numPrice = parseFloat(price);
-        let numOrders = orders;
+        quotePrice = 1 / quotePrice;
+      }
 
-        if (i === arr.length - 1 && remainingAmount !== 0) {
-          // we only used a fraction of the orders out at the last price
-          // https://www.mathsisfun.com/definitions/decimal-fraction.html
-          //
-          // also remainingAmount is negative since we subtract the size from it
-          // so we negate it to get a positive
-          const decmialFraction = -remainingAmount / numSize; //
-          numOrders = numOrders * decmialFraction;
-        }
-
-        totalOrders += numOrders;
-
-        return numPrice * numOrders;
-      })
-      .reduce((prev, num) => prev + num);
-
-    numQuote /= totalOrders;
-
-    quote = round10(numQuote, -2).toFixed(quoteIncrementPlaces); // TODO: change based on the quote increment
-  }
-
-  if (tb === QuoteCurrency.BASE && action === Actions.BUY) {
-    // a BUY for the quote cur (USD) in the base (BTC)
-    // input amount === USD output === BTC
-    // here we use the orig algoritm to get the weight avg BTC price.
-    // since the order book is BTC->USD we can do 1/Price to get the price per dollar of btc.
-    // that is the quote price. multple that by the desired input amount and bang ur done.
-    // ob.asks do some stuff
+      total = quotePrice * amount;
+    }
   }
 
   if (tb === QuoteCurrency.QUOTE && action === Actions.SELL) {
@@ -153,5 +209,9 @@ export function generateQuote(
     // ob.bids do some stuff
   }
 
-  return parseFloat(quote);
+  return {
+    fillable: orderSanityCheck.fillable,
+    quotePrice: round10(quotePrice, -quoteIncrementPlaces), // TODO: change based on the quote increment
+    total: round10(total, -quoteIncrementPlaces)
+  };
 }

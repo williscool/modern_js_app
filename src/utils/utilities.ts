@@ -17,6 +17,7 @@ export enum QuoteCurrency {
   QUOTE = "quote"
 }
 
+// tslint:disable:strict-boolean-expressions
 // tslint:disable:no-parameter-reassignment
 /**
  * Decimal adjustment of a number.
@@ -35,10 +36,13 @@ function decimalAdjust(kind: string, value: number, exp?: number) {
   }
   value = +value;
   exp = +exp;
+
+  // dont need this check because we can be sure our input will be a number.
+  // YAY typescript
   // If the value is not a number or the exp is not an integer...
-  if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
-    return NaN;
-  }
+  // if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
+  //   return NaN;
+  // }
   // Shift
   let valueStr = value.toString().split("e");
   value = Math[kind](
@@ -51,17 +55,41 @@ function decimalAdjust(kind: string, value: number, exp?: number) {
   return +`${valueStr[0]}e${valueStr[1] ? +valueStr[1] + exp : exp}`;
 }
 
-// Decimal round
+/**
+ * Decimal round
+ *
+ * @export
+ * @param {number} value
+ * @param {number} exp
+ * @returns {number} rounded to nearest 10s place
+ */
 export function round10(value: number, exp: number) {
   return decimalAdjust("round", value, exp);
 }
-// Decimal floor
+
+/**
+ *  Decimal floor
+ *
+ * @export
+ * @param {number} value
+ * @param {number} exp
+ * @returns {number} floored to nearest 10s place
+ */
 export function floor10(value: number, exp: number) {
   return decimalAdjust("floor", value, exp);
 }
-// Decimal ceil
+
+/**
+ * Decimal ceil
+ *
+ * @export
+ * @param {number} value
+ * @param {number} exp
+ * @returns {number} ceiling to nearest 10s place
+ */
 export function ceil10(value: number, exp: number) {
   return decimalAdjust("ceil", value, exp);
 }
 
 // tslint:enable:no-parameter-reassignment
+// tslint:enable:strict-boolean-expressions
