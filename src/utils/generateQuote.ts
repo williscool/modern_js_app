@@ -27,20 +27,31 @@ interface OrderSanityCheck {
  * @param {[GdaxOrderBookEntry]} openOrders asks or bids
  * @returns {Object} if the quote is fillable, the indicies in the orderbook of prices used, and the amount remaining
  */
-function orderIsFillable(amount: number, openOrders: [GdaxOrderBookEntry]) {
+function orderIsFillable(
+  qc: QuoteCurrency,
+  openOrders: [GdaxOrderBookEntry],
+  amount: number
+) {
   // start off assuming we cannot cover the whole desired amount
-  // with total amount of base cur (BTC) availble at the first price
   let fillable = false;
   const priceIndicies: number[] = [];
   let remainingAmount = amount;
 
   for (let i = 0; i <= openOrders.length - 1; i += 1) {
     priceIndicies.push(i);
-    const [, size] = openOrders[i];
+    const [price, size] = openOrders[i];
 
     const numSize = parseFloat(size);
+    let subtractor = numSize;
 
-    remainingAmount -= numSize;
+    if (qc === QuoteCurrency.BASE) {
+      // quote will be in BTC in our example so input is USD
+      // so we we need to convert the open amount in this order to USD
+      // by multipling the USD price for 1 BTC on this order by the amount out (size)
+      subtractor = numSize * parseFloat(price);
+    }
+
+    remainingAmount -= subtractor;
 
     if (remainingAmount <= 0) {
       // stop once we've seen enough currency to cover the order
@@ -69,6 +80,7 @@ function orderIsFillable(amount: number, openOrders: [GdaxOrderBookEntry]) {
  * @returns {number} weighted avg quote of prices
  */
 function calculateWeightedAvgPrice(
+  qc: QuoteCurrency,
   priceIndicies: number[],
   openOrders: GdaxOrderBookEntry[],
   remainingAmount: number
@@ -85,10 +97,17 @@ function calculateWeightedAvgPrice(
       if (i === arr.length - 1 && remainingAmount !== 0) {
         // we only used a fraction of the orders out at the last price
         // https://www.mathsisfun.com/definitions/decimal-fraction.html
-        //
+
+        let divisor = numSize;
+
+        if (qc === QuoteCurrency.BASE) {
+          // we need to use price to get the total currency out in quote currency
+          divisor = numSize * numPrice;
+        }
+
         // also remainingAmount is negative since we subtract the size from it
         // so we negate it to get a positive
-        const decmialFraction = -remainingAmount / numSize; //
+        const decmialFraction = -remainingAmount / divisor;
         numOrders = numOrders * decmialFraction;
       }
 
@@ -114,7 +133,7 @@ function calculateWeightedAvgPrice(
  *
  * @export
  * @param {GdaxOrderBook} ob
- * @param {QuoteCurrency} tb
+ * @param {QuoteCurrency} qc
  * @param {Actions} action
  * @param {number} amount
  *
@@ -122,7 +141,7 @@ function calculateWeightedAvgPrice(
  */
 export function generateQuote(
   ob: GdaxOrderBook,
-  tb: QuoteCurrency,
+  qc: QuoteCurrency,
   action: Actions,
   amount: number,
   quoteIncrementPlaces: number = 2
@@ -164,7 +183,7 @@ export function generateQuote(
     //
     // so we go through asks until we can fill the order
     // ob.asks do some stuff
-    orderSanityCheck = orderIsFillable(amount, ob.asks);
+    orderSanityCheck = orderIsFillable(qc, ob.asks, amount);
 
     // after orderIsFillable several cases can be true
 
@@ -177,13 +196,13 @@ export function generateQuote(
       // ^ this means we covered the whole amount the user wanted to get quoted
       // so now we can calculate a weighted average for a quote price
       quotePrice = calculateWeightedAvgPrice(
+        qc,
         orderSanityCheck.priceIndicies,
         ob.asks,
         orderSanityCheck.remainingAmount
       );
 
-      if (tb !== QuoteCurrency.QUOTE) {
-        // tb === QuoteCurrency.BASE
+      if (qc === QuoteCurrency.BASE) {
         // a BUY for the quote cur (USD) in the base (BTC)
         // input amount === USD output === BTC
         // here we use the orig algoritm to get the weight avg BTC price.
@@ -197,13 +216,13 @@ export function generateQuote(
     }
   }
 
-  if (tb === QuoteCurrency.QUOTE && action === Actions.SELL) {
+  if (qc === QuoteCurrency.QUOTE && action === Actions.SELL) {
     // SELL for base cur (BTC) in quote cur (USD)
     // then we go through bids until we can fill the order
     // ob.bids do some stuff
   }
 
-  if (tb === QuoteCurrency.BASE && action === Actions.SELL) {
+  if (qc === QuoteCurrency.BASE && action === Actions.SELL) {
     // if this is a SELL order for base cur (in the mock BTC) then we go through bids until we can fill the order
     // a SELL for the quote cur (USD) in the base (BTC)
     // ob.bids do some stuff

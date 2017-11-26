@@ -16,6 +16,7 @@ Gdax service will handle fetching data and state transitions
 2. when ready disable loading state and switch to application loaded or ready. (form will have all of the currencies)
 3. form has buy and sell actions and the quote currencies are dictated by the base currency (i.e GBP can only go to BTC)
 4. when clicked with a form amount the gdax service will get the latest orderbook and calculate a current quote
+5. also need to validate values like greater than zero for input and not less than .01 for USD and however many decimal places for BTC
 
 also need to handle error states. like api being down or something like that by faking the bad response and having the gdax service handle it.
 
@@ -66,16 +67,19 @@ also need to handle error states. like api being down or something like that by 
 - It should also be able to support trades where the base and quote currencies are the inverse of a GDAX trading pair. For example, the application should be able to quote a buy of BTC (base currency) using ETH (quote currency) or LTC (quote currency), even though the available GDAX orderbooks are ETH-BTC and LTC-BTC.
 - product types https://docs.gdax.com/#get-products
 - ship it to netlify
+- If you decide to write in an environment that requires compilation (i.e. webpack, coffeescript, etc), you should submit alongside your code a single script that will run your program.
 
 ## p1
 
-- setup hot module reload https://frontendmasters.com/courses/react/setting-up-hmr
-- tracking (for when a user clicks, compares, prices of stuff, etc.)
-- leave redux for last  (figure out what thunks and sagas are) https://github.com/redux-saga
+- tracking (for when a user clicks, compares, prices of stuff, etc.) (just log to console)
+
+  ​
 
 ## p2 (things I would do in the future) 
+- setup hot module reload https://frontendmasters.com/courses/react/setting-up-hmr
 - use a number formatting (i.e. adding commas and dollar sign) input ala https://github.com/s-yadav/react-number-format
 - add a router if the app needed multiple pages
+- leave redux for last  (figure out what thunks and sagas are) https://github.com/redux-saga
 - internationalize
 
 ## Clarification questions

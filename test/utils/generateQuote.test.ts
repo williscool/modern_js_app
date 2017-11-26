@@ -46,7 +46,7 @@ describe("generateQuote", () => {
         expect(output.quotePrice).toBeCloseTo(738.74);
         expect(output.total).toBeCloseTo(1108.11);
       });
-      it("Buy, 3.5 ", () => {
+      it("Buy, 3.5", () => {
         const orderBook: GdaxOrderBook = {
           sequence: 1,
           bids: [["8179", "0.09125942", 1]],
@@ -63,8 +63,7 @@ describe("generateQuote", () => {
         expect(output.fillable).toBeFalsy();
       });
     });
-    // tslint:disable-next-line:mocha-no-side-effect-code
-    xdescribe("Base", () => {
+    describe("Base", () => {
       it("Buy, 705.4", () => {
         const orderBook: GdaxOrderBook = {
           sequence: 1,
@@ -76,11 +75,12 @@ describe("generateQuote", () => {
           orderBook,
           QuoteCurrency.BASE,
           Actions.BUY,
-          705.4
+          705.4,
+          8
         );
 
-        expect(output.quotePrice).toBeCloseTo(704.4);
         expect(output.total).toBeCloseTo(1);
+        expect(output.quotePrice).toBeCloseTo(0.00141763);
       });
       it("Buy, 1108.11", () => {
         const orderBook: GdaxOrderBook = {
@@ -93,13 +93,14 @@ describe("generateQuote", () => {
           orderBook,
           QuoteCurrency.BASE,
           Actions.BUY,
-          1108.11
+          1108.11,
+          8
         );
 
-        expect(output.quotePrice).toBeCloseTo(738.74);
         expect(output.total).toBeCloseTo(1.5);
+        expect(output.quotePrice).toBeCloseTo(0.00135366);
       });
-      it("Buy, 3.5 ", () => {
+      it("Buy, 1000", () => {
         const orderBook: GdaxOrderBook = {
           sequence: 1,
           bids: [["8179", "0.09125942", 1]],
@@ -110,7 +111,8 @@ describe("generateQuote", () => {
           orderBook,
           QuoteCurrency.BASE,
           Actions.BUY,
-          10000
+          10000,
+          8
         );
 
         expect(output.fillable).toBeFalsy();
