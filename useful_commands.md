@@ -43,3 +43,9 @@ copy(JSON.stringify(products))
 copy(JSON.stringify(orderBook))
 ```
 
+
+
+```
+console.log(prev, prev + num, totalOrders, (prev + num) / totalOrders);
+```
+

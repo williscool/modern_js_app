@@ -8,6 +8,17 @@ left
 - use it to print out stuff
 - write tests (just that form displays inputs.  extensive unit tests )
 
+more succiently
+
+Gdax service will handle fetching data and state transitions
+
+1. on load say setting up prodtus and have loading animation and have the app in a loading state
+2. when ready disable loading state and switch to application loaded or ready. (form will have all of the currencies)
+3. form has buy and sell actions and the quote currencies are dictated by the base currency (i.e GBP can only go to BTC)
+4. when clicked with a form amount the gdax service will get the latest orderbook and calculate a current quote
+
+also need to handle error states. like api being down or something like that by faking the bad response and having the gdax service handle it.
+
 ## I/O
 
 ### form output field follow (all strings)

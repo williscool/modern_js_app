@@ -38,7 +38,7 @@
     // https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56
     "jsx-no-lambda": false,
     "jsx-no-bind": false,
-    "no-suspicious-comment": false, // designed to only really be used right before a release
+    "no-suspicious-comment": false, // designed to only really be used right before a release. TODO: use this before release to make sure I didn't miss anything
     "no-void-expression": false,
     "no-submodule-imports": false,
     "curly": [true, "ignore-same-line"],

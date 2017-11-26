@@ -16,3 +16,52 @@ export enum QuoteCurrency {
   BASE = "base",
   QUOTE = "quote"
 }
+
+// tslint:disable:no-parameter-reassignment
+/**
+ * Decimal adjustment of a number.
+ *
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor
+ *
+ * @param {String}  type  The type of adjustment.
+ * @param {Number}  value The number.
+ * @param {Number} exp   The exponent (the 10 logarithm of the adjustment base).
+ * @returns {Number} The adjusted value.
+ */
+function decimalAdjust(kind: string, value: number, exp?: number) {
+  // If the exp is undefined or zero...
+  if (!exp) {
+    return Math[kind](value);
+  }
+  value = +value;
+  exp = +exp;
+  // If the value is not a number or the exp is not an integer...
+  if (isNaN(value) || !(typeof exp === "number" && exp % 1 === 0)) {
+    return NaN;
+  }
+  // Shift
+  let valueStr = value.toString().split("e");
+  value = Math[kind](
+    +`${valueStr[0]}e${valueStr[1] ? +valueStr[1] - exp : -exp}`
+  );
+
+  valueStr = value.toString().split("e");
+
+  // Shift back
+  return +`${valueStr[0]}e${valueStr[1] ? +valueStr[1] + exp : exp}`;
+}
+
+// Decimal round
+export function round10(value: number, exp: number) {
+  return decimalAdjust("round", value, exp);
+}
+// Decimal floor
+export function floor10(value: number, exp: number) {
+  return decimalAdjust("floor", value, exp);
+}
+// Decimal ceil
+export function ceil10(value: number, exp: number) {
+  return decimalAdjust("ceil", value, exp);
+}
+
+// tslint:enable:no-parameter-reassignment

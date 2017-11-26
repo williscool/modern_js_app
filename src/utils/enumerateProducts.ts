@@ -1,3 +1,5 @@
+import { QuoteCurrency } from "./utilities";
+
 export interface GdaxProduct {
   id: string;
   base_currency: string;
@@ -30,25 +32,25 @@ export function enumerateProducts(p: [{}]) {
   p.forEach((obj: GdaxProduct) => {
     const id = obj.id;
 
-    const currencyA = id.split("-")[0];
-    const currencyB = id.split("-")[1];
+    const baseCurrency = id.split("-")[0];
+    const quoteCurrency = id.split("-")[1];
 
-    if (!output[currencyA]) {
-      output[currencyA] = {};
-      output[currencyA][currencyB] = true;
+    if (!output[baseCurrency]) {
+      output[baseCurrency] = {};
+      output[baseCurrency][quoteCurrency] = QuoteCurrency.BASE;
     }
 
-    if (!output[currencyB]) {
-      output[currencyB] = {};
-      output[currencyB][currencyA] = true;
+    if (!output[quoteCurrency]) {
+      output[quoteCurrency] = {};
+      output[quoteCurrency][baseCurrency] = QuoteCurrency.QUOTE;
     }
 
-    if (!output[currencyA][currencyB]) {
-      output[currencyA][currencyB] = true;
+    if (!output[baseCurrency][quoteCurrency]) {
+      output[baseCurrency][quoteCurrency] = QuoteCurrency.BASE;
     }
 
-    if (!output[currencyB][currencyA]) {
-      output[currencyB][currencyA] = true;
+    if (!output[quoteCurrency][baseCurrency]) {
+      output[quoteCurrency][baseCurrency] = QuoteCurrency.QUOTE;
     }
   });
 
