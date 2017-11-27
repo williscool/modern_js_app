@@ -5,13 +5,21 @@
  *
  * https://stackoverflow.com/questions/36633033/how-to-organize-typescript-interfaces/36636368#36636368
  *
- * @enum {number}
+ * @enum {string}
  */
 export enum Actions {
   BUY = "Buy",
   SELL = "Sell"
 }
 
+/**
+ * Enum to signify based on the product from gdax if this currency is the base or quote
+ *
+ * I use to to signify which currency to generate a quote in
+ *
+ * @export
+ * @enum {string}
+ */
 export enum QuoteCurrency {
   BASE = "base",
   QUOTE = "quote"

@@ -131,14 +131,22 @@ function calculateWeightedAvgPrice(
  *
  * Output: a quote to buy one currency in the other
  *
+ * examples in the comments in this code use the BTC-USD order book
+ * default base of that book
+ * BTC === base
+ * USD === quote
+ * so you could read the name of the book as Quotes for buying and selling BTC in USD
+ *
+ *
  * @export
  * @param {GdaxOrderBook} ob
  * @param {QuoteCurrency} qc
  * @param {Actions} action
  * @param {number} amount
  *
- * @returns {Object} members tell if the order is fillable, quote price, and the total amount
+ * @returns {Object} object members tell if the order is fillable, quote price, and the total amount
  */
+// tslint:disable-next-line:max-func-body-length
 export function generateQuote(
   ob: GdaxOrderBook,
   qc: QuoteCurrency,
@@ -147,11 +155,6 @@ export function generateQuote(
   quoteIncrementPlaces: number = 2
 ) {
   /**
-   * examples in the comments use the BTC-USD order book
-   * default base of that book
-   * BTC === base
-   * USD === quote
-   * so you could read the name of the book as Quotes for buying and selling BTC in USD
    *
    * There are 3 cases when generating a quote
    *
@@ -166,71 +169,97 @@ export function generateQuote(
   };
   let quotePrice = 0;
   let total = 0;
+  let openOrders = ob.asks;
 
   /**
-   * Aggregated levels return only one size for each active price
-   * (as if there was only a single order for that size at the level).
+   * Seeking to action (buy/sell) base (BTC) in quote (USD)
    *
-   * so I read this as there are X orders of varying sizes out to sell bitcoin at Y price
-   * which means whenever we've looked at enough prices to cover the order we are done.
+   * btc(base) -> usd(quote)
    *
-   * you end up using a weighted avg of all of the prices you have to use fill the quote
+   * input btc -> output usd
+   *
+   * (buying/selling BTC and expecting a quote in USD) qc === QUOTE
+   *
+   *   buy = buyer wants to buy BTC with USD = asks | aka action === BUY
+   *   sell = seller wants to sell BTC and wants to know how much USD they will get for it = bids | action === SELL
+   *
+   */
+
+  /**
+   * Seeking to action (buy/sell) quote (USD) in base (BTC)
+   *
+   * input usd -> output btc
+   *
+   * (buying/selling USD and expecting a quote in BTC) qc === BASE
+   *
+   *   buy = buyer wants to buy USD with BTC = bids | action === BUY
+   *   sell = seller wants to sell USD and know how much BTC they will get = asks | action == SELL
+   *
    */
 
   if (action === Actions.BUY) {
-    // user request quote for a BUY for the base currency (BTC in the mock) in the quote currency (in the mock USD)
-    // this means the input amount will be BTC and the quote amount will be USD
-    //
-    // so we go through asks until we can fill the order
-    // ob.asks do some stuff
-    orderSanityCheck = orderIsFillable(qc, ob.asks, amount);
+    // buy BTC with USD
+    openOrders = ob.asks;
 
-    // after orderIsFillable several cases can be true
-
-    // remainingAmount > 0
-    // ^ this means there was not enough open asks to cover the quote
-    // which mean fillable will be false
-
-    if (orderSanityCheck.fillable) {
-      // remainingAmount <= 0
-      // ^ this means we covered the whole amount the user wanted to get quoted
-      // so now we can calculate a weighted average for a quote price
-      quotePrice = calculateWeightedAvgPrice(
-        qc,
-        orderSanityCheck.priceIndicies,
-        ob.asks,
-        orderSanityCheck.remainingAmount
-      );
-
-      if (qc === QuoteCurrency.BASE) {
-        // a BUY for the quote cur (USD) in the base (BTC)
-        // input amount === USD output === BTC
-        // here we use the orig algoritm to get the weight avg BTC price.
-        // since the order book is BTC->USD we can do 1/Price to get the price per dollar of btc.
-        // that is the quote price. multple that by the desired input amount and bang ur done.
-
-        quotePrice = 1 / quotePrice;
-      }
-
-      total = quotePrice * amount;
+    if (qc === QuoteCurrency.BASE) {
+      // BUY USD with BTC
+      openOrders = ob.bids;
     }
   }
 
-  if (qc === QuoteCurrency.QUOTE && action === Actions.SELL) {
-    // SELL for base cur (BTC) in quote cur (USD)
-    // then we go through bids until we can fill the order
-    // ob.bids do some stuff
+  if (action === Actions.SELL) {
+    // sell BTC for USD
+    openOrders = ob.bids;
+
+    if (qc === QuoteCurrency.BASE) {
+      // sell USD for BTC
+      openOrders = ob.asks;
+    }
   }
 
-  if (qc === QuoteCurrency.BASE && action === Actions.SELL) {
-    // if this is a SELL order for base cur (in the mock BTC) then we go through bids until we can fill the order
-    // a SELL for the quote cur (USD) in the base (BTC)
-    // ob.bids do some stuff
+  orderSanityCheck = orderIsFillable(qc, openOrders, amount);
+  // after orderIsFillable several cases can be true
+
+  // remainingAmount > 0
+  // ^ this means there was not enough open asks to cover the quote
+  // which meana fillable will be false
+
+  if (orderSanityCheck.fillable) {
+    // remainingAmount <= 0
+    // ^ this means we covered the whole amount the user wanted to get quoted
+    // so now we can calculate a weighted average for a quote price
+
+    /**
+     * Aggregated levels return only one size for each active price
+     * (as if there was only a single order for that size at the level).
+     *
+     * so I read this as there are X orders of varying sizes out to sell bitcoin at Y price
+     * which means whenever we've looked at enough prices to cover the order we are done.
+     *
+     * you end up using a weighted avg of all of the prices you have to use fill the quote
+     */
+    quotePrice = calculateWeightedAvgPrice(
+      qc,
+      orderSanityCheck.priceIndicies,
+      openOrders,
+      orderSanityCheck.remainingAmount
+    );
+
+    if (qc === QuoteCurrency.BASE) {
+      // since the order book is BTC->USD we can do 1/Price to get the price per dollar of btc.
+      // that is the quote price. multple that by the desired input amount and bang ur done.
+      //
+      quotePrice = 1 / quotePrice;
+    }
+
+    total = quotePrice * amount;
   }
+  // I would have the quote increment be dictacted by what is returned from the api but I will stick to to making
+  // the i/o decimal places similar to the examples from the problem statement
 
   return {
     fillable: orderSanityCheck.fillable,
-    quotePrice: round10(quotePrice, -quoteIncrementPlaces), // TODO: change based on the quote increment
+    quotePrice: round10(quotePrice, -quoteIncrementPlaces),
     total: round10(total, -quoteIncrementPlaces)
   };
 }
