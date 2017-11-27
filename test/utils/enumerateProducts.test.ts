@@ -1,6 +1,9 @@
 import { enumerateProducts } from "../../src/utils/enumerateProducts";
 import { QuoteCurrency } from "../../src/utils/utilities";
-import * as productsJson from "../mocks/products.json";
+// typescript module import doesn't support json :/
+// tslint:disable
+const productsJson = require("../mocks/products.json");
+// tslint:enable
 /**
  * Tests our product enumerator works correctly
  *

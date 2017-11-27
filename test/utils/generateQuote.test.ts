@@ -6,8 +6,6 @@ import { Actions, QuoteCurrency } from "../../src/utils/utilities";
  * tests our quote creator works correctly
  */
 
-// TODO: inline test sells, do both with the mock
-
 describe("generateQuote", () => {
   describe("Inline BTC-USD", () => {
     describe("Quote, Buy", () => {
