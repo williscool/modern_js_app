@@ -1,6 +1,10 @@
 # Currency Exchange Quotes
 
-
+1. test happy path for gdax service getQuote
+2. test error paths for gdax service getQuote
+3. wire it ui
+4. polish UI
+5. done
 
 left
 
@@ -42,21 +46,18 @@ also need to handle error states. like api being down or something like that by 
 - The GDAX API exposes an endpoint to retrieve the current order book for each currency pair. For this task, you should use the level 2 query parameter to fetch aggregated order information. Note: this API can be accessed unauthenticated; you do not need API keys or a GDAX account to access it.  https://docs.gdax.com/#get-product-order-book
 - Your application will handle users trying to buy or sell a particular amount of a currency (the base
   currency) with another currency (the quote currency).
-- The application should use the orderbook to
-  determine the best price the user would be able to get for the request by executing trades on GDAX.
+- The application should use the orderbook to determine the best price the user would be able to get for the request by executing trades on GDAX.
 - Note that the quantity your user enters will rarely match a quantity in the order book exactly. This
   means your code will need to aggregate orders in the order book or use parts of orders to arrive at
-  the exact quantity, and your final quote will be a weighted average of those prices.
+  the exact quantity, 
+- and your final quote will be a weighted average of those prices.
 - (I'm pretty sure this is the unbounded knapsack problem lol. ) if not its at least related https://github.com/williscool/code_gym/blob/es6ify/javascript/interview_questions/cake_theif.js
 - https://www.interviewcake.com/question/javascript/cake-thief
 
 ## p0
 
-- there will be a gdax service at `gdax.ts` and that will use `utils` the process the response from the gdax api . the service should also handle errors and such
-- test quote algo
 - On load I would have loading thing that tells the user we are getting product types
 - Use curency hash to build what is in the base and quote currrency dropdowns
-- (mock the api respone json to test our algorithm with)
 - use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
 - make sure we've got some kind of loading animation for when it is processing for the quote
 - let user know we are crunching data once we get it back if it takes  a while 
@@ -143,6 +144,11 @@ also need to handle error states. like api being down or something like that by 
 - (would just test this in a seperate unit test) test that you can't invalid and you can input valid input in the amount section 
 - hit the api. copy resp with chrome `copy` use it to make mock data to test algorithm on (do it for 1 product type too. algorithm will work on all once we have one)
 - once you have teh product types build an object where the keys are the currency types and the values are the currences it can be converted to. 
+- there will be a gdax service at `gdax.ts` and that will use `utils` the process the response from the gdax api . the service should also handle errors and such
+- test quote algo
+- test happy path for gdax service init
+- test error paths for gdax service init
+- (mock the api respone json to test our algorithm with)
 
 
 
@@ -192,3 +198,6 @@ also need to handle error states. like api being down or something like that by 
 - https://github.com/ReactTraining/react-router/issues/4477#issuecomment-286187737
 - https://medium.com/@yoniweisbrod/interacting-with-apis-using-react-native-fetch-9733f28566bb
 - https://stackoverflow.com/a/36636368/511710
+- https://gist.github.com/rjz/4c6922b811a6ea859b19ed62a682045c
+- https://github.github.io/fetch/
+- https://github.com/github/fetch/issues/203

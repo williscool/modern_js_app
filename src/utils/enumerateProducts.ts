@@ -1,4 +1,4 @@
-import { QuoteCurrency } from "./utilities";
+import { OrderBookCurrency } from "./utilities";
 
 export interface GdaxProduct {
   id: string;
@@ -37,22 +37,69 @@ export function enumerateProducts(p: [{}]) {
 
     if (!output[baseCurrency]) {
       output[baseCurrency] = {};
-      output[baseCurrency][quoteCurrency] = QuoteCurrency.BASE;
+      output[baseCurrency][quoteCurrency] = OrderBookCurrency.BASE;
     }
 
     if (!output[quoteCurrency]) {
       output[quoteCurrency] = {};
-      output[quoteCurrency][baseCurrency] = QuoteCurrency.QUOTE;
+      output[quoteCurrency][baseCurrency] = OrderBookCurrency.QUOTE;
     }
 
     if (!output[baseCurrency][quoteCurrency]) {
-      output[baseCurrency][quoteCurrency] = QuoteCurrency.BASE;
+      output[baseCurrency][quoteCurrency] = OrderBookCurrency.BASE;
     }
 
     if (!output[quoteCurrency][baseCurrency]) {
-      output[quoteCurrency][baseCurrency] = QuoteCurrency.QUOTE;
+      output[quoteCurrency][baseCurrency] = OrderBookCurrency.QUOTE;
     }
   });
 
   return output;
+}
+
+/**
+ * Return the name of the product for a given base and quote currency.
+ *
+ * based on their gdax orderbook product name
+ *
+ * @export
+ * @param {{}} ph hash of product names
+ * @param {string} baseCurrencyName
+ * @param {string} OrderBookCurrencyName
+ * @returns
+ */
+export function getProductName(
+  ph: {},
+  baseCurrencyName: string,
+  quoteCurrency: string
+) {
+  if (!ph[baseCurrencyName] || !ph[baseCurrencyName][quoteCurrency]) {
+    return false;
+  }
+
+  let pName = "";
+
+  if (ph[baseCurrencyName][quoteCurrency] === OrderBookCurrency.BASE) {
+    pName = `${baseCurrencyName}-${quoteCurrency}`;
+  } else if (ph[baseCurrencyName][quoteCurrency] === OrderBookCurrency.QUOTE) {
+    pName = `${quoteCurrency}-${baseCurrencyName}`;
+  }
+
+  return pName;
+}
+
+/**
+ * Get the type of currency the input base is in the product orderbook
+ *
+ * @export
+ * @param {string} productName
+ * @param {string} base
+ * @returns {OrderBookCurrency}
+ */
+export function orderBookCurrencyType(productName: string, base: string) {
+  const [productBase] = productName.split("-");
+
+  return productBase === base
+    ? OrderBookCurrency.BASE
+    : OrderBookCurrency.QUOTE;
 }

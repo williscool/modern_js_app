@@ -42,6 +42,7 @@
     "no-void-expression": false,
     "no-submodule-imports": false,
     "curly": [true, "ignore-same-line"],
-    "prefer-for-of": false
+    "prefer-for-of": false,
+    "strict-boolean-expressions": false
   }
 }

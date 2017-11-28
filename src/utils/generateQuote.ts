@@ -1,4 +1,4 @@
-import { Actions, QuoteCurrency, round10 } from "./utilities";
+import { Actions, OrderBookCurrency, round10 } from "./utilities";
 
 // https://github.com/Microsoft/TypeScript/issues/5259
 interface GdaxOrderBookEntry extends Array<number | string> {
@@ -28,7 +28,7 @@ interface OrderSanityCheck {
  * @returns {Object} if the quote is fillable, the indicies in the orderbook of prices used, and the amount remaining
  */
 function orderIsFillable(
-  qc: QuoteCurrency,
+  qc: OrderBookCurrency,
   openOrders: [GdaxOrderBookEntry],
   amount: number
 ) {
@@ -44,7 +44,7 @@ function orderIsFillable(
     const numSize = parseFloat(size);
     let subtractor = numSize;
 
-    if (qc === QuoteCurrency.BASE) {
+    if (qc === OrderBookCurrency.BASE) {
       // quote will be in BTC in our example so input is USD
       // so we we need to convert the open amount in this order to USD
       // by multipling the USD price for 1 BTC on this order by the amount out (size)
@@ -80,7 +80,7 @@ function orderIsFillable(
  * @returns {number} weighted avg quote of prices
  */
 function calculateWeightedAvgPrice(
-  qc: QuoteCurrency,
+  qc: OrderBookCurrency,
   priceIndicies: number[],
   openOrders: GdaxOrderBookEntry[],
   remainingAmount: number
@@ -100,7 +100,7 @@ function calculateWeightedAvgPrice(
 
         let divisor = numSize;
 
-        if (qc === QuoteCurrency.BASE) {
+        if (qc === OrderBookCurrency.BASE) {
           // we need to use price to get the total currency out in quote currency
           divisor = numSize * numPrice;
         }
@@ -140,7 +140,7 @@ function calculateWeightedAvgPrice(
  *
  * @export
  * @param {GdaxOrderBook} ob
- * @param {QuoteCurrency} qc
+ * @param {OrderBookCurrency} qc
  * @param {Actions} action
  * @param {number} amount
  *
@@ -149,7 +149,7 @@ function calculateWeightedAvgPrice(
 // tslint:disable-next-line:max-func-body-length
 export function generateQuote(
   ob: GdaxOrderBook,
-  qc: QuoteCurrency,
+  qc: OrderBookCurrency,
   action: Actions,
   amount: number,
   quoteIncrementPlaces: number = 2
@@ -201,7 +201,7 @@ export function generateQuote(
     // buy BTC with USD
     openOrders = ob.asks;
 
-    if (qc === QuoteCurrency.BASE) {
+    if (qc === OrderBookCurrency.BASE) {
       // BUY USD with BTC
       openOrders = ob.bids;
     }
@@ -211,7 +211,7 @@ export function generateQuote(
     // sell BTC for USD
     openOrders = ob.bids;
 
-    if (qc === QuoteCurrency.BASE) {
+    if (qc === OrderBookCurrency.BASE) {
       // sell USD for BTC
       openOrders = ob.asks;
     }
@@ -245,7 +245,7 @@ export function generateQuote(
       orderSanityCheck.remainingAmount
     );
 
-    if (qc === QuoteCurrency.BASE) {
+    if (qc === OrderBookCurrency.BASE) {
       // since the order book is BTC->USD we can do 1/Price to get the price per dollar of btc.
       // that is the quote price. multple that by the desired input amount and bang ur done.
       //

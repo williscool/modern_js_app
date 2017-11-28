@@ -48,6 +48,6 @@ copy(JSON.stringify(orderBook))
 ```
 console.log(prev, prev + num, totalOrders, (prev + num) / totalOrders);
 
-if (qc === QuoteCurrency.BASE) console.log(orderSanityCheck);
+if (qc === OrderBookCurrency.BASE) console.log(orderSanityCheck);
 ```
 

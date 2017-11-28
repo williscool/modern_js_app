@@ -20,7 +20,7 @@ export enum Actions {
  * @export
  * @enum {string}
  */
-export enum QuoteCurrency {
+export enum OrderBookCurrency {
   BASE = "base",
   QUOTE = "quote"
 }

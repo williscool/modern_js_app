@@ -1,5 +1,5 @@
 import { GdaxOrderBook, generateQuote } from "../../src/utils/generateQuote";
-import { Actions, QuoteCurrency } from "../../src/utils/utilities";
+import { Actions, OrderBookCurrency } from "../../src/utils/utilities";
 // import * as orderBookMock from "../mocks/btc-usd-order-book-level-2.json";
 
 /**
@@ -21,7 +21,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.QUOTE,
+          OrderBookCurrency.QUOTE,
           Actions.BUY,
           1
         );
@@ -38,7 +38,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.QUOTE,
+          OrderBookCurrency.QUOTE,
           Actions.BUY,
           1.5
         );
@@ -55,7 +55,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.QUOTE,
+          OrderBookCurrency.QUOTE,
           Actions.BUY,
           3.5
         );
@@ -73,7 +73,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.BASE,
+          OrderBookCurrency.BASE,
           Actions.BUY,
           705.4,
           8
@@ -91,7 +91,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.BASE,
+          OrderBookCurrency.BASE,
           Actions.BUY,
           1108.11,
           8
@@ -109,7 +109,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.BASE,
+          OrderBookCurrency.BASE,
           Actions.BUY,
           10000,
           8
@@ -128,7 +128,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.QUOTE,
+          OrderBookCurrency.QUOTE,
           Actions.SELL,
           10
         );
@@ -145,7 +145,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.QUOTE,
+          OrderBookCurrency.QUOTE,
           Actions.SELL,
           15
         );
@@ -162,7 +162,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.QUOTE,
+          OrderBookCurrency.QUOTE,
           Actions.SELL,
           25
         );
@@ -180,7 +180,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.BASE,
+          OrderBookCurrency.BASE,
           Actions.SELL,
           705.4,
           8
@@ -198,7 +198,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.BASE,
+          OrderBookCurrency.BASE,
           Actions.SELL,
           1108.11,
           8
@@ -216,7 +216,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          QuoteCurrency.BASE,
+          OrderBookCurrency.BASE,
           Actions.SELL,
           10000,
           8

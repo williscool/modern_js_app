@@ -12,8 +12,7 @@
     "dev:wds": "webpack-dev-server --progress",
     "prod:build": "rimraf dist && NODE_ENV=production webpack -p --progress",
     "format": "prettier --write .",
-    "lint":
-      "eslint src webpack.config.babel.js --ext .js && tslint -p . && ./node_modules/stylelint/bin/stylelint.js 'src/**/*.css'",
+    "lint": "eslint src webpack.config.babel.js --ext .js && tslint -p . && ./node_modules/stylelint/bin/stylelint.js 'src/**/*.css'",
     "test": "yarn format && yarn lint && yarn jest",
     "jest": "jest --coverage",
     "jest:updateSnapshots": "jest -u",
@@ -23,6 +22,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.1.4",
     "@types/enzyme-adapter-react-16": "^1.0.1",
+    "@types/fetch-mock": "^5.12.2",
     "@types/jest": "^21.1.6",
     "@types/material-ui": "^0.18.4",
     "@types/react": "^16.0.25",
@@ -43,6 +43,7 @@
     "eslint-plugin-import": "^2.8.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.5.0",
+    "fetch-mock": "^5.13.1",
     "file-loader": "^1.1.5",
     "html-loader": "^0.5.1",
     "html-webpack-plugin": "^2.30.1",
@@ -79,9 +80,16 @@
     "url-search-params-polyfill": "^2.0.1",
     "validator": "^9.1.1"
   },
-  "browserslist": ["> 1%", "not ie <= 11", "safari >= 10", "ios >= 8"],
+  "browserslist": [
+    "> 1%",
+    "not ie <= 11",
+    "safari >= 10",
+    "ios >= 8"
+  ],
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
     "testEnvironment": "node",
     "mapCoverage": true,
     "testMatch": [

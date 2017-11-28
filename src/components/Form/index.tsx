@@ -37,7 +37,6 @@ export class Form extends React.Component {
    *
    * @memberof Form
    */
-
   public state = {
     actions: Object.keys(Actions).map(k => Actions[k]),
     current_action: Actions.BUY,
