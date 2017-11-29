@@ -12,12 +12,11 @@
     "dev:wds": "webpack-dev-server --progress",
     "prod:build": "rimraf dist && NODE_ENV=production webpack -p --progress",
     "format": "prettier --write .",
-    "lint":
-      "eslint src webpack.config.babel.js --ext .js  && ./node_modules/stylelint/bin/stylelint.js 'src/**/*.css' && tslint -p . ",
-    "test": "yarn format && yarn lint && yarn jest",
+    "lint": "eslint src webpack.config.babel.js --ext .js  && ./node_modules/stylelint/bin/stylelint.js 'src/**/*.css' && tslint -p . ",
+    "test": "yarn lint && yarn jest",
     "jest": "jest --coverage",
     "jest:updateSnapshots": "jest -u",
-    "precommit": "yarn test",
+    "precommit": "yarn format && yarn test",
     "prepush": "yarn test && yarn prod:build"
   },
   "devDependencies": {
@@ -26,6 +25,7 @@
     "@types/fetch-mock": "^5.12.2",
     "@types/jest": "^21.1.6",
     "@types/material-ui": "^0.18.4",
+    "@types/node": "^8.0.53",
     "@types/react": "^16.0.25",
     "@types/react-dom": "^16.0.3",
     "@types/react-tap-event-plugin": "^0.0.30",
@@ -80,11 +80,19 @@
     "react-tap-event-plugin": "^3.0.2",
     "source-map-loader": "^0.2.3",
     "url-search-params-polyfill": "^2.0.1",
-    "validator": "^9.1.1"
+    "validator": "^9.1.1",
+    "whatwg-url": "^6.3.0"
   },
-  "browserslist": ["> 1%", "not ie <= 11", "safari >= 10", "ios >= 8"],
+  "browserslist": [
+    "> 1%",
+    "not ie <= 11",
+    "safari >= 10",
+    "ios >= 8"
+  ],
   "jest": {
-    "collectCoverageFrom": ["src/**/*.{js,jsx,ts,tsx}"],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}"
+    ],
     "testEnvironment": "node",
     "mapCoverage": true,
     "testMatch": [

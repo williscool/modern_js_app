@@ -1,4 +1,6 @@
-import { URL } from "url";
+// URL from url works for types and stuff in test but does not work correctly once built in dev
+// import { URL } from "url";
+import { URL } from "whatwg-url";
 import {
   enumerateProducts,
   GdaxProduct,
@@ -9,7 +11,6 @@ import { generateQuote } from "../utils/generateQuote";
 import { Actions, OrderBookOutputCurrency } from "../utils/utilities";
 import { validateGdaxOrder } from "../utils/validateGdaxOrder";
 
-// const URL = require('url').URL
 /**
  * Constructs api error objects
  *
@@ -97,7 +98,6 @@ export class GdaxService {
    */
   public errorObj: GdaxExchangeErrorContainer;
   constructor() {
-    this.productExchangeHash = {};
     this.baseUrl = new URL(`${API_URL}${ENDPOINTS.products}`);
   }
   /**

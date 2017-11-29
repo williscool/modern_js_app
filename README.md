@@ -33,7 +33,9 @@ For methodology and roadmap
 
 ## Usage
 
-This application require node v8 or higher to to run becasue https://stackoverflow.com/a/45615942/511710
+This application require node v8 or higher to to run because 
+
+https://stackoverflow.com/questions/44738065/uncaught-typeerror-url-is-not-a-constructor-using-whatwg-url-object-support-for/45615942#45615942
 
 
 

@@ -6,3 +6,4 @@ declare module "*.json" {
 }
 
 declare module "decomment";
+declare module "whatwg-url";
