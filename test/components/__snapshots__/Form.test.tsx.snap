@@ -18,6 +18,27 @@ ShallowWrapper {
     "nodeType": "host",
     "props": Object {
       "children": Array [
+        <h2>
+          Gdax Crypto Currency Exchange Quoter
+        </h2>,
+        <p
+          className="subtitle"
+        >
+          Pick your currencies, input your amount, and find your prices!
+        </p>,
+        <div
+          className="form_loading_indicator"
+        >
+          loading... 
+          <CircularProgress
+            max={100}
+            min={0}
+            mode="indeterminate"
+            size={40}
+            thickness={3.5}
+            value={0}
+          />
+        </div>,
         <SelectField
           autoWidth={false}
           className="action"
@@ -77,114 +98,28 @@ ShallowWrapper {
         <SelectField
           autoWidth={false}
           className="base"
-          disabled={false}
+          disabled={true}
           errorText=""
           floatingLabelFixed={true}
           floatingLabelText="Base Currency"
           fullWidth={false}
           multiple={false}
           onChange={[Function]}
-          value="USD"
-        >
-          <MenuItem
-            anchorOrigin={
-              Object {
-                "horizontal": "right",
-                "vertical": "top",
-              }
-            }
-            checked={false}
-            desktop={false}
-            disabled={false}
-            focusState="none"
-            insetChildren={false}
-            primaryText="USD"
-            targetOrigin={
-              Object {
-                "horizontal": "left",
-                "vertical": "top",
-              }
-            }
-            value="USD"
-          />
-          <MenuItem
-            anchorOrigin={
-              Object {
-                "horizontal": "right",
-                "vertical": "top",
-              }
-            }
-            checked={false}
-            desktop={false}
-            disabled={false}
-            focusState="none"
-            insetChildren={false}
-            primaryText="LTC"
-            targetOrigin={
-              Object {
-                "horizontal": "left",
-                "vertical": "top",
-              }
-            }
-            value="LTC"
-          />
-        </SelectField>,
+          value=""
+        />,
         <br />,
         <SelectField
           autoWidth={false}
           className="quote"
-          disabled={false}
+          disabled={true}
           errorText=""
           floatingLabelFixed={true}
           floatingLabelText="Quote Currency"
           fullWidth={false}
           multiple={false}
           onChange={[Function]}
-          value="BTC"
-        >
-          <MenuItem
-            anchorOrigin={
-              Object {
-                "horizontal": "right",
-                "vertical": "top",
-              }
-            }
-            checked={false}
-            desktop={false}
-            disabled={false}
-            focusState="none"
-            insetChildren={false}
-            primaryText="BTC"
-            targetOrigin={
-              Object {
-                "horizontal": "left",
-                "vertical": "top",
-              }
-            }
-            value="BTC"
-          />
-          <MenuItem
-            anchorOrigin={
-              Object {
-                "horizontal": "right",
-                "vertical": "top",
-              }
-            }
-            checked={false}
-            desktop={false}
-            disabled={false}
-            focusState="none"
-            insetChildren={false}
-            primaryText="LTC"
-            targetOrigin={
-              Object {
-                "horizontal": "left",
-                "vertical": "top",
-              }
-            }
-            value="LTC"
-          />
-        </SelectField>,
+          value=""
+        />,
         <br />,
         <TextField
           className="amount"
@@ -205,7 +140,7 @@ ShallowWrapper {
         <br />,
         <br />,
         <RaisedButton
-          disabled={false}
+          disabled={true}
           fullWidth={false}
           label="Submit"
           labelPosition="after"
@@ -214,32 +149,87 @@ ShallowWrapper {
           secondary={false}
         />,
         <p>
+           Currency: 
+          
            
-          {
-  "actions": [
-    "Buy",
-    "Sell"
-  ],
-  "current_action": "Buy",
-  "curriences": [
-    "USD",
-    "BTC",
-    "LTC"
-  ],
-  "base": "USD",
-  "quote": "BTC",
-  "amount": "",
-  "actionErrorText": "",
-  "baseErrorText": "",
-  "quoteErrorText": "",
-  "amountErrorText": ""
-}
+        </p>,
+        <p>
+           Price: 
+          
+           
+        </p>,
+        <p>
+           Total: 
+          
            
         </p>,
       ],
     },
     "ref": null,
     "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Gdax Crypto Currency Exchange Quoter",
+        },
+        "ref": null,
+        "rendered": "Gdax Crypto Currency Exchange Quoter",
+        "type": "h2",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "Pick your currencies, input your amount, and find your prices!",
+          "className": "subtitle",
+        },
+        "ref": null,
+        "rendered": "Pick your currencies, input your amount, and find your prices!",
+        "type": "p",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            "loading... ",
+            <CircularProgress
+              max={100}
+              min={0}
+              mode="indeterminate"
+              size={40}
+              thickness={3.5}
+              value={0}
+            />,
+          ],
+          "className": "form_loading_indicator",
+        },
+        "ref": null,
+        "rendered": Array [
+          "loading... ",
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "max": 100,
+              "min": 0,
+              "mode": "indeterminate",
+              "size": 40,
+              "thickness": 3.5,
+              "value": 0,
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+        ],
+        "type": "div",
+      },
       Object {
         "instance": null,
         "key": undefined,
@@ -370,113 +360,19 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "autoWidth": false,
-          "children": Array [
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="USD"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="USD"
-            />,
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="LTC"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="LTC"
-            />,
-          ],
+          "children": Array [],
           "className": "base",
-          "disabled": false,
+          "disabled": true,
           "errorText": "",
           "floatingLabelFixed": true,
           "floatingLabelText": "Base Currency",
           "fullWidth": false,
           "multiple": false,
           "onChange": [Function],
-          "value": "USD",
+          "value": "",
         },
         "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": "0",
-            "nodeType": "class",
-            "props": Object {
-              "anchorOrigin": Object {
-                "horizontal": "right",
-                "vertical": "top",
-              },
-              "checked": false,
-              "desktop": false,
-              "disabled": false,
-              "focusState": "none",
-              "insetChildren": false,
-              "primaryText": "USD",
-              "targetOrigin": Object {
-                "horizontal": "left",
-                "vertical": "top",
-              },
-              "value": "USD",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1",
-            "nodeType": "class",
-            "props": Object {
-              "anchorOrigin": Object {
-                "horizontal": "right",
-                "vertical": "top",
-              },
-              "checked": false,
-              "desktop": false,
-              "disabled": false,
-              "focusState": "none",
-              "insetChildren": false,
-              "primaryText": "LTC",
-              "targetOrigin": Object {
-                "horizontal": "left",
-                "vertical": "top",
-              },
-              "value": "LTC",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-        ],
+        "rendered": Array [],
         "type": [Function],
       },
       Object {
@@ -494,113 +390,19 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "autoWidth": false,
-          "children": Array [
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="BTC"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="BTC"
-            />,
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="LTC"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="LTC"
-            />,
-          ],
+          "children": Array [],
           "className": "quote",
-          "disabled": false,
+          "disabled": true,
           "errorText": "",
           "floatingLabelFixed": true,
           "floatingLabelText": "Quote Currency",
           "fullWidth": false,
           "multiple": false,
           "onChange": [Function],
-          "value": "BTC",
+          "value": "",
         },
         "ref": null,
-        "rendered": Array [
-          Object {
-            "instance": null,
-            "key": "0",
-            "nodeType": "class",
-            "props": Object {
-              "anchorOrigin": Object {
-                "horizontal": "right",
-                "vertical": "top",
-              },
-              "checked": false,
-              "desktop": false,
-              "disabled": false,
-              "focusState": "none",
-              "insetChildren": false,
-              "primaryText": "BTC",
-              "targetOrigin": Object {
-                "horizontal": "left",
-                "vertical": "top",
-              },
-              "value": "BTC",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-          Object {
-            "instance": null,
-            "key": "1",
-            "nodeType": "class",
-            "props": Object {
-              "anchorOrigin": Object {
-                "horizontal": "right",
-                "vertical": "top",
-              },
-              "checked": false,
-              "desktop": false,
-              "disabled": false,
-              "focusState": "none",
-              "insetChildren": false,
-              "primaryText": "LTC",
-              "targetOrigin": Object {
-                "horizontal": "left",
-                "vertical": "top",
-              },
-              "value": "LTC",
-            },
-            "ref": null,
-            "rendered": null,
-            "type": [Function],
-          },
-        ],
+        "rendered": Array [],
         "type": [Function],
       },
       Object {
@@ -659,7 +461,7 @@ ShallowWrapper {
         "key": undefined,
         "nodeType": "class",
         "props": Object {
-          "disabled": false,
+          "disabled": true,
           "fullWidth": false,
           "label": "Submit",
           "labelPosition": "after",
@@ -677,51 +479,53 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": Array [
-            " ",
-            "{
-  \\"actions\\": [
-    \\"Buy\\",
-    \\"Sell\\"
-  ],
-  \\"current_action\\": \\"Buy\\",
-  \\"curriences\\": [
-    \\"USD\\",
-    \\"BTC\\",
-    \\"LTC\\"
-  ],
-  \\"base\\": \\"USD\\",
-  \\"quote\\": \\"BTC\\",
-  \\"amount\\": \\"\\",
-  \\"actionErrorText\\": \\"\\",
-  \\"baseErrorText\\": \\"\\",
-  \\"quoteErrorText\\": \\"\\",
-  \\"amountErrorText\\": \\"\\"
-}",
+            " Currency: ",
+            "",
             " ",
           ],
         },
         "ref": null,
         "rendered": Array [
+          " Currency: ",
+          "",
           " ",
-          "{
-  \\"actions\\": [
-    \\"Buy\\",
-    \\"Sell\\"
-  ],
-  \\"current_action\\": \\"Buy\\",
-  \\"curriences\\": [
-    \\"USD\\",
-    \\"BTC\\",
-    \\"LTC\\"
-  ],
-  \\"base\\": \\"USD\\",
-  \\"quote\\": \\"BTC\\",
-  \\"amount\\": \\"\\",
-  \\"actionErrorText\\": \\"\\",
-  \\"baseErrorText\\": \\"\\",
-  \\"quoteErrorText\\": \\"\\",
-  \\"amountErrorText\\": \\"\\"
-}",
+        ],
+        "type": "p",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            " Price: ",
+            "",
+            " ",
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          " Price: ",
+          "",
+          " ",
+        ],
+        "type": "p",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            " Total: ",
+            "",
+            " ",
+          ],
+        },
+        "ref": null,
+        "rendered": Array [
+          " Total: ",
+          "",
           " ",
         ],
         "type": "p",
@@ -736,6 +540,27 @@ ShallowWrapper {
       "nodeType": "host",
       "props": Object {
         "children": Array [
+          <h2>
+            Gdax Crypto Currency Exchange Quoter
+          </h2>,
+          <p
+            className="subtitle"
+          >
+            Pick your currencies, input your amount, and find your prices!
+          </p>,
+          <div
+            className="form_loading_indicator"
+          >
+            loading... 
+            <CircularProgress
+              max={100}
+              min={0}
+              mode="indeterminate"
+              size={40}
+              thickness={3.5}
+              value={0}
+            />
+          </div>,
           <SelectField
             autoWidth={false}
             className="action"
@@ -795,114 +620,28 @@ ShallowWrapper {
           <SelectField
             autoWidth={false}
             className="base"
-            disabled={false}
+            disabled={true}
             errorText=""
             floatingLabelFixed={true}
             floatingLabelText="Base Currency"
             fullWidth={false}
             multiple={false}
             onChange={[Function]}
-            value="USD"
-          >
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="USD"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="USD"
-            />
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="LTC"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="LTC"
-            />
-          </SelectField>,
+            value=""
+          />,
           <br />,
           <SelectField
             autoWidth={false}
             className="quote"
-            disabled={false}
+            disabled={true}
             errorText=""
             floatingLabelFixed={true}
             floatingLabelText="Quote Currency"
             fullWidth={false}
             multiple={false}
             onChange={[Function]}
-            value="BTC"
-          >
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="BTC"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="BTC"
-            />
-            <MenuItem
-              anchorOrigin={
-                Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                }
-              }
-              checked={false}
-              desktop={false}
-              disabled={false}
-              focusState="none"
-              insetChildren={false}
-              primaryText="LTC"
-              targetOrigin={
-                Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                }
-              }
-              value="LTC"
-            />
-          </SelectField>,
+            value=""
+          />,
           <br />,
           <TextField
             className="amount"
@@ -923,7 +662,7 @@ ShallowWrapper {
           <br />,
           <br />,
           <RaisedButton
-            disabled={false}
+            disabled={true}
             fullWidth={false}
             label="Submit"
             labelPosition="after"
@@ -932,32 +671,87 @@ ShallowWrapper {
             secondary={false}
           />,
           <p>
+             Currency: 
+            
              
-            {
-  "actions": [
-    "Buy",
-    "Sell"
-  ],
-  "current_action": "Buy",
-  "curriences": [
-    "USD",
-    "BTC",
-    "LTC"
-  ],
-  "base": "USD",
-  "quote": "BTC",
-  "amount": "",
-  "actionErrorText": "",
-  "baseErrorText": "",
-  "quoteErrorText": "",
-  "amountErrorText": ""
-}
+          </p>,
+          <p>
+             Price: 
+            
+             
+          </p>,
+          <p>
+             Total: 
+            
              
           </p>,
         ],
       },
       "ref": null,
       "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Gdax Crypto Currency Exchange Quoter",
+          },
+          "ref": null,
+          "rendered": "Gdax Crypto Currency Exchange Quoter",
+          "type": "h2",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "Pick your currencies, input your amount, and find your prices!",
+            "className": "subtitle",
+          },
+          "ref": null,
+          "rendered": "Pick your currencies, input your amount, and find your prices!",
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              "loading... ",
+              <CircularProgress
+                max={100}
+                min={0}
+                mode="indeterminate"
+                size={40}
+                thickness={3.5}
+                value={0}
+              />,
+            ],
+            "className": "form_loading_indicator",
+          },
+          "ref": null,
+          "rendered": Array [
+            "loading... ",
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "class",
+              "props": Object {
+                "max": 100,
+                "min": 0,
+                "mode": "indeterminate",
+                "size": 40,
+                "thickness": 3.5,
+                "value": 0,
+              },
+              "ref": null,
+              "rendered": null,
+              "type": [Function],
+            },
+          ],
+          "type": "div",
+        },
         Object {
           "instance": null,
           "key": undefined,
@@ -1088,113 +882,19 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "autoWidth": false,
-            "children": Array [
-              <MenuItem
-                anchorOrigin={
-                  Object {
-                    "horizontal": "right",
-                    "vertical": "top",
-                  }
-                }
-                checked={false}
-                desktop={false}
-                disabled={false}
-                focusState="none"
-                insetChildren={false}
-                primaryText="USD"
-                targetOrigin={
-                  Object {
-                    "horizontal": "left",
-                    "vertical": "top",
-                  }
-                }
-                value="USD"
-              />,
-              <MenuItem
-                anchorOrigin={
-                  Object {
-                    "horizontal": "right",
-                    "vertical": "top",
-                  }
-                }
-                checked={false}
-                desktop={false}
-                disabled={false}
-                focusState="none"
-                insetChildren={false}
-                primaryText="LTC"
-                targetOrigin={
-                  Object {
-                    "horizontal": "left",
-                    "vertical": "top",
-                  }
-                }
-                value="LTC"
-              />,
-            ],
+            "children": Array [],
             "className": "base",
-            "disabled": false,
+            "disabled": true,
             "errorText": "",
             "floatingLabelFixed": true,
             "floatingLabelText": "Base Currency",
             "fullWidth": false,
             "multiple": false,
             "onChange": [Function],
-            "value": "USD",
+            "value": "",
           },
           "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": "0",
-              "nodeType": "class",
-              "props": Object {
-                "anchorOrigin": Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                },
-                "checked": false,
-                "desktop": false,
-                "disabled": false,
-                "focusState": "none",
-                "insetChildren": false,
-                "primaryText": "USD",
-                "targetOrigin": Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                },
-                "value": "USD",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1",
-              "nodeType": "class",
-              "props": Object {
-                "anchorOrigin": Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                },
-                "checked": false,
-                "desktop": false,
-                "disabled": false,
-                "focusState": "none",
-                "insetChildren": false,
-                "primaryText": "LTC",
-                "targetOrigin": Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                },
-                "value": "LTC",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-          ],
+          "rendered": Array [],
           "type": [Function],
         },
         Object {
@@ -1212,113 +912,19 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "autoWidth": false,
-            "children": Array [
-              <MenuItem
-                anchorOrigin={
-                  Object {
-                    "horizontal": "right",
-                    "vertical": "top",
-                  }
-                }
-                checked={false}
-                desktop={false}
-                disabled={false}
-                focusState="none"
-                insetChildren={false}
-                primaryText="BTC"
-                targetOrigin={
-                  Object {
-                    "horizontal": "left",
-                    "vertical": "top",
-                  }
-                }
-                value="BTC"
-              />,
-              <MenuItem
-                anchorOrigin={
-                  Object {
-                    "horizontal": "right",
-                    "vertical": "top",
-                  }
-                }
-                checked={false}
-                desktop={false}
-                disabled={false}
-                focusState="none"
-                insetChildren={false}
-                primaryText="LTC"
-                targetOrigin={
-                  Object {
-                    "horizontal": "left",
-                    "vertical": "top",
-                  }
-                }
-                value="LTC"
-              />,
-            ],
+            "children": Array [],
             "className": "quote",
-            "disabled": false,
+            "disabled": true,
             "errorText": "",
             "floatingLabelFixed": true,
             "floatingLabelText": "Quote Currency",
             "fullWidth": false,
             "multiple": false,
             "onChange": [Function],
-            "value": "BTC",
+            "value": "",
           },
           "ref": null,
-          "rendered": Array [
-            Object {
-              "instance": null,
-              "key": "0",
-              "nodeType": "class",
-              "props": Object {
-                "anchorOrigin": Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                },
-                "checked": false,
-                "desktop": false,
-                "disabled": false,
-                "focusState": "none",
-                "insetChildren": false,
-                "primaryText": "BTC",
-                "targetOrigin": Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                },
-                "value": "BTC",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            Object {
-              "instance": null,
-              "key": "1",
-              "nodeType": "class",
-              "props": Object {
-                "anchorOrigin": Object {
-                  "horizontal": "right",
-                  "vertical": "top",
-                },
-                "checked": false,
-                "desktop": false,
-                "disabled": false,
-                "focusState": "none",
-                "insetChildren": false,
-                "primaryText": "LTC",
-                "targetOrigin": Object {
-                  "horizontal": "left",
-                  "vertical": "top",
-                },
-                "value": "LTC",
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-          ],
+          "rendered": Array [],
           "type": [Function],
         },
         Object {
@@ -1377,7 +983,7 @@ ShallowWrapper {
           "key": undefined,
           "nodeType": "class",
           "props": Object {
-            "disabled": false,
+            "disabled": true,
             "fullWidth": false,
             "label": "Submit",
             "labelPosition": "after",
@@ -1395,51 +1001,53 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              " ",
-              "{
-  \\"actions\\": [
-    \\"Buy\\",
-    \\"Sell\\"
-  ],
-  \\"current_action\\": \\"Buy\\",
-  \\"curriences\\": [
-    \\"USD\\",
-    \\"BTC\\",
-    \\"LTC\\"
-  ],
-  \\"base\\": \\"USD\\",
-  \\"quote\\": \\"BTC\\",
-  \\"amount\\": \\"\\",
-  \\"actionErrorText\\": \\"\\",
-  \\"baseErrorText\\": \\"\\",
-  \\"quoteErrorText\\": \\"\\",
-  \\"amountErrorText\\": \\"\\"
-}",
+              " Currency: ",
+              "",
               " ",
             ],
           },
           "ref": null,
           "rendered": Array [
+            " Currency: ",
+            "",
             " ",
-            "{
-  \\"actions\\": [
-    \\"Buy\\",
-    \\"Sell\\"
-  ],
-  \\"current_action\\": \\"Buy\\",
-  \\"curriences\\": [
-    \\"USD\\",
-    \\"BTC\\",
-    \\"LTC\\"
-  ],
-  \\"base\\": \\"USD\\",
-  \\"quote\\": \\"BTC\\",
-  \\"amount\\": \\"\\",
-  \\"actionErrorText\\": \\"\\",
-  \\"baseErrorText\\": \\"\\",
-  \\"quoteErrorText\\": \\"\\",
-  \\"amountErrorText\\": \\"\\"
-}",
+          ],
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              " Price: ",
+              "",
+              " ",
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            " Price: ",
+            "",
+            " ",
+          ],
+          "type": "p",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              " Total: ",
+              "",
+              " ",
+            ],
+          },
+          "ref": null,
+          "rendered": Array [
+            " Total: ",
+            "",
             " ",
           ],
           "type": "p",

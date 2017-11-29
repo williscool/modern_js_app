@@ -4,6 +4,8 @@ A modern js app.
 
 (add more detail about what it supposed to do)
 
+
+
 ## Features
 
 
@@ -30,6 +32,10 @@ Checkout the [design_notes.md](design_notes.md)
 For methodology and roadmap
 
 ## Usage
+
+This application require node v8 or higher to to run becasue https://stackoverflow.com/a/45615942/511710
+
+
 
 Run
 
