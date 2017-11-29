@@ -220,10 +220,12 @@ export class GdaxService {
     }
 
     // build orderbook url
-    const quoteURL = new URL(`${this.baseUrl.toString()}/${productName}/book`);
-    // set query params
-    // tslint:disable-next-line:no-backbone-get-set-outside-model
-    quoteURL.searchParams.set("level", "2");
+    const quoteURL = new URL(
+      `${this.baseUrl.toString()}/${productName}/book?level=2`
+    );
+
+    // set query params sadly doesn't work on the whatwg-url :/
+    // quoteURL.searchParams.set("level", "2");
 
     const orderBook = await this.fetcher(quoteURL);
 
