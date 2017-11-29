@@ -29,15 +29,18 @@ A modern js app.
 
 Checkout the [design_notes.md](design_notes.md)
 
-For methodology and roadmap
+For roadmap and methodology 
+
+Especially the sources at the bottom
 
 ## Usage
 
-This application require node v8 or higher to to run because 
+### Requirements
 
-https://stackoverflow.com/questions/44738065/uncaught-typeerror-url-is-not-a-constructor-using-whatwg-url-object-support-for/45615942#45615942
+- node v8 or higher installed (just in case)
 
 
+### Commands
 
 Run
 
@@ -49,18 +52,24 @@ Then you can visit
 
 [http://localhost:7000/dist/](http://localhost:7000/dist/) to check out the app
 
-
-
 Test
 
 ```
 yarn test
 ```
 
-
-
 Production build
 
 ```
 yarn prod:build
 ```
+
+
+
+Single Script Start  from instructions
+
+```
+chmod +x run.sh
+./run.sh
+```
+

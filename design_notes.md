@@ -1,12 +1,13 @@
 # Currency Exchange Quotes
 
-1. (timebox 30 mins) awaitify
-2. done
+Guide to this: 
 
-## p0
+1. Roadmap
+2. Clarification Questions and Answer
+3. All the things that got done roughly in chronological order (most recent at the bottom)
+4. Sources for things that helped me get it done
 
-- ship it to netlify
-- If you decide to write in an environment that requires compilation (i.e. webpack, coffeescript, etc), you should submit alongside your code a single script that will run your program.
+
 
 ## p1(things I would do in the future)
 
@@ -156,6 +157,16 @@
 
 - product types https://docs.gdax.com/#get-products
 
+- (timebox 30 mins) awaitify
+
+- ship it to netlify
+
+- done
+
+
+1. polish UI
+2.  If you decide to write in an environment that requires compilation (i.e. webpack, coffeescript, etc), you should submit alongside your code a single script that will run your program.
+3. fix not adding level 2
 
 ## I/O
 
@@ -183,10 +194,8 @@
   the exact quantity, 
 - and your final quote will be a weighted average of those prices.
 - center form and/or or figure out some theme from a tutorial
-- done
 
-1. polish UI
-
+  ​
 
 ### Pre
 
