@@ -1,5 +1,5 @@
 import { GdaxOrderBook, generateQuote } from "../../src/utils/generateQuote";
-import { Actions, OrderBookCurrency } from "../../src/utils/utilities";
+import { Actions, OrderBookOutputCurrency } from "../../src/utils/utilities";
 // import * as orderBookMock from "../mocks/btc-usd-order-book-level-2.json";
 
 /**
@@ -21,11 +21,12 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.QUOTE,
+          OrderBookOutputCurrency.QUOTE,
           Actions.BUY,
           1
         );
 
+        expect(output.bookUsed).toBe("asks");
         expect(output.quotePrice).toBeCloseTo(705.4);
         expect(output.total).toBeCloseTo(705.4);
       });
@@ -38,7 +39,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.QUOTE,
+          OrderBookOutputCurrency.QUOTE,
           Actions.BUY,
           1.5
         );
@@ -55,7 +56,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.QUOTE,
+          OrderBookOutputCurrency.QUOTE,
           Actions.BUY,
           3.5
         );
@@ -73,7 +74,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.BASE,
+          OrderBookOutputCurrency.BASE,
           Actions.BUY,
           705.4,
           8
@@ -91,12 +92,13 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.BASE,
+          OrderBookOutputCurrency.BASE,
           Actions.BUY,
           1108.11,
           8
         );
 
+        expect(output.bookUsed).toBe("bids");
         expect(output.total).toBeCloseTo(1.5);
         expect(output.quotePrice).toBeCloseTo(0.00135366);
       });
@@ -109,12 +111,13 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.BASE,
+          OrderBookOutputCurrency.BASE,
           Actions.BUY,
           10000,
           8
         );
 
+        expect(output.bookUsed).toBe("bids");
         expect(output.fillable).toBeFalsy();
       });
     });
@@ -128,7 +131,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.QUOTE,
+          OrderBookOutputCurrency.QUOTE,
           Actions.SELL,
           10
         );
@@ -145,7 +148,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.QUOTE,
+          OrderBookOutputCurrency.QUOTE,
           Actions.SELL,
           15
         );
@@ -162,7 +165,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.QUOTE,
+          OrderBookOutputCurrency.QUOTE,
           Actions.SELL,
           25
         );
@@ -180,7 +183,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.BASE,
+          OrderBookOutputCurrency.BASE,
           Actions.SELL,
           705.4,
           8
@@ -198,7 +201,7 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.BASE,
+          OrderBookOutputCurrency.BASE,
           Actions.SELL,
           1108.11,
           8
@@ -216,13 +219,14 @@ describe("generateQuote", () => {
 
         const output = generateQuote(
           orderBook,
-          OrderBookCurrency.BASE,
+          OrderBookOutputCurrency.BASE,
           Actions.SELL,
           10000,
           8
         );
 
         expect(output.fillable).toBeFalsy();
+        expect(output.bookUsed).toBe("asks");
       });
     });
   });

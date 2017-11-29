@@ -2,9 +2,10 @@
 
 1. test happy path for gdax service getQuote
 2. test error paths for gdax service getQuote
-3. wire it ui
-4. polish UI
-5. done
+3. (timebox 30 mins) awaitify
+4. wire it ui
+5. polish UI
+6. done
 
 left
 
@@ -201,3 +202,4 @@ also need to handle error states. like api being down or something like that by 
 - https://gist.github.com/rjz/4c6922b811a6ea859b19ed62a682045c
 - https://github.github.io/fetch/
 - https://github.com/github/fetch/issues/203
+- https://gist.github.com/msmfsd/fca50ab095b795eb39739e8c4357a808

@@ -1,9 +1,9 @@
 import {
   enumerateProducts,
-  getProductName,
-  orderBookCurrencyType
+  getOrderBookOutputCurrencyType,
+  getProductName
 } from "../../src/utils/enumerateProducts";
-import { OrderBookCurrency } from "../../src/utils/utilities";
+import { OrderBookOutputCurrency } from "../../src/utils/utilities";
 // typescript module import doesn't support json :/
 // tslint:disable
 const productsJson = require("../mocks/products.json");
@@ -22,33 +22,33 @@ describe("enumerateProducts", () => {
     const products = enumerateProducts(productsJson);
     expect(products).toEqual({
       LTC: {
-        EUR: OrderBookCurrency.BASE,
-        BTC: OrderBookCurrency.BASE,
-        USD: OrderBookCurrency.BASE
+        EUR: OrderBookOutputCurrency.BASE,
+        BTC: OrderBookOutputCurrency.BASE,
+        USD: OrderBookOutputCurrency.BASE
       },
       EUR: {
-        LTC: OrderBookCurrency.QUOTE,
-        ETH: OrderBookCurrency.QUOTE,
-        BTC: OrderBookCurrency.QUOTE
+        LTC: OrderBookOutputCurrency.QUOTE,
+        ETH: OrderBookOutputCurrency.QUOTE,
+        BTC: OrderBookOutputCurrency.QUOTE
       },
       BTC: {
-        LTC: OrderBookCurrency.QUOTE,
-        ETH: OrderBookCurrency.QUOTE,
-        USD: OrderBookCurrency.BASE,
-        EUR: OrderBookCurrency.BASE,
-        GBP: OrderBookCurrency.BASE
+        LTC: OrderBookOutputCurrency.QUOTE,
+        ETH: OrderBookOutputCurrency.QUOTE,
+        USD: OrderBookOutputCurrency.BASE,
+        EUR: OrderBookOutputCurrency.BASE,
+        GBP: OrderBookOutputCurrency.BASE
       },
       USD: {
-        LTC: OrderBookCurrency.QUOTE,
-        ETH: OrderBookCurrency.QUOTE,
-        BTC: OrderBookCurrency.QUOTE
+        LTC: OrderBookOutputCurrency.QUOTE,
+        ETH: OrderBookOutputCurrency.QUOTE,
+        BTC: OrderBookOutputCurrency.QUOTE
       },
       ETH: {
-        USD: OrderBookCurrency.BASE,
-        EUR: OrderBookCurrency.BASE,
-        BTC: OrderBookCurrency.BASE
+        USD: OrderBookOutputCurrency.BASE,
+        EUR: OrderBookOutputCurrency.BASE,
+        BTC: OrderBookOutputCurrency.BASE
       },
-      GBP: { BTC: OrderBookCurrency.QUOTE }
+      GBP: { BTC: OrderBookOutputCurrency.QUOTE }
     });
   });
   it("should enumerate the currencies you can exchange", () => {
@@ -70,13 +70,13 @@ describe("getProductName", () => {
   });
 });
 
-describe("orderBookCurrencyType", () => {
-  it("should return correct orderBookCurrency type", () => {
-    expect(orderBookCurrencyType("BTC-USD", "BTC")).toBe(
-      OrderBookCurrency.BASE
+describe("getOrderBookOutputCurrencyType", () => {
+  it("should return correct OrderBookOutputCurrency type", () => {
+    expect(getOrderBookOutputCurrencyType("BTC-USD", "BTC")).toBe(
+      OrderBookOutputCurrency.QUOTE
     );
-    expect(orderBookCurrencyType("BTC-USD", "USD")).toBe(
-      OrderBookCurrency.QUOTE
+    expect(getOrderBookOutputCurrencyType("BTC-USD", "USD")).toBe(
+      OrderBookOutputCurrency.BASE
     );
   });
 });

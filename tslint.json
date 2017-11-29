@@ -43,6 +43,7 @@
     "no-submodule-imports": false,
     "curly": [true, "ignore-same-line"],
     "prefer-for-of": false,
-    "strict-boolean-expressions": false
+    "strict-boolean-expressions": false,
+    "prefer-conditional-expression": false
   }
 }

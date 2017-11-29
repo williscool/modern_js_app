@@ -1,4 +1,4 @@
-import { Actions, OrderBookCurrency, round10 } from "./utilities";
+import { Actions, OrderBookOutputCurrency, round10 } from "./utilities";
 
 // https://github.com/Microsoft/TypeScript/issues/5259
 interface GdaxOrderBookEntry extends Array<number | string> {
@@ -20,6 +20,13 @@ interface OrderSanityCheck {
   remainingAmount: number;
 }
 
+export interface GdaxOrderBookQuote {
+  fillable: boolean;
+  bookUsed?: string;
+  quotePrice?: number;
+  total?: number;
+}
+
 /**
  * Checks to see that give an amount and an order book we can fill the input order with said book
  *
@@ -28,7 +35,7 @@ interface OrderSanityCheck {
  * @returns {Object} if the quote is fillable, the indicies in the orderbook of prices used, and the amount remaining
  */
 function orderIsFillable(
-  qc: OrderBookCurrency,
+  qc: OrderBookOutputCurrency,
   openOrders: [GdaxOrderBookEntry],
   amount: number
 ) {
@@ -44,7 +51,7 @@ function orderIsFillable(
     const numSize = parseFloat(size);
     let subtractor = numSize;
 
-    if (qc === OrderBookCurrency.BASE) {
+    if (qc === OrderBookOutputCurrency.BASE) {
       // quote will be in BTC in our example so input is USD
       // so we we need to convert the open amount in this order to USD
       // by multipling the USD price for 1 BTC on this order by the amount out (size)
@@ -80,7 +87,7 @@ function orderIsFillable(
  * @returns {number} weighted avg quote of prices
  */
 function calculateWeightedAvgPrice(
-  qc: OrderBookCurrency,
+  qc: OrderBookOutputCurrency,
   priceIndicies: number[],
   openOrders: GdaxOrderBookEntry[],
   remainingAmount: number
@@ -100,7 +107,7 @@ function calculateWeightedAvgPrice(
 
         let divisor = numSize;
 
-        if (qc === OrderBookCurrency.BASE) {
+        if (qc === OrderBookOutputCurrency.BASE) {
           // we need to use price to get the total currency out in quote currency
           divisor = numSize * numPrice;
         }
@@ -140,20 +147,20 @@ function calculateWeightedAvgPrice(
  *
  * @export
  * @param {GdaxOrderBook} ob
- * @param {OrderBookCurrency} qc
+ * @param {OrderBookOutputCurrency} qc
  * @param {Actions} action
  * @param {number} amount
  *
- * @returns {Object} object members tell if the order is fillable, quote price, and the total amount
+ * @returns {GdaxOrderBookQuote} object members tell if the order is fillable, quote price, and the total amount
  */
 // tslint:disable-next-line:max-func-body-length
 export function generateQuote(
   ob: GdaxOrderBook,
-  qc: OrderBookCurrency,
+  qc: OrderBookOutputCurrency,
   action: Actions,
   amount: number,
   quoteIncrementPlaces: number = 2
-) {
+): GdaxOrderBookQuote {
   /**
    *
    * There are 3 cases when generating a quote
@@ -167,6 +174,7 @@ export function generateQuote(
     priceIndicies: [-1],
     remainingAmount: 0
   };
+
   let quotePrice = 0;
   let total = 0;
   let openOrders = ob.asks;
@@ -201,7 +209,7 @@ export function generateQuote(
     // buy BTC with USD
     openOrders = ob.asks;
 
-    if (qc === OrderBookCurrency.BASE) {
+    if (qc === OrderBookOutputCurrency.BASE) {
       // BUY USD with BTC
       openOrders = ob.bids;
     }
@@ -211,7 +219,7 @@ export function generateQuote(
     // sell BTC for USD
     openOrders = ob.bids;
 
-    if (qc === OrderBookCurrency.BASE) {
+    if (qc === OrderBookOutputCurrency.BASE) {
       // sell USD for BTC
       openOrders = ob.asks;
     }
@@ -245,7 +253,7 @@ export function generateQuote(
       orderSanityCheck.remainingAmount
     );
 
-    if (qc === OrderBookCurrency.BASE) {
+    if (qc === OrderBookOutputCurrency.BASE) {
       // since the order book is BTC->USD we can do 1/Price to get the price per dollar of btc.
       // that is the quote price. multple that by the desired input amount and bang ur done.
       //
@@ -254,11 +262,10 @@ export function generateQuote(
 
     total = quotePrice * amount;
   }
-  // I would have the quote increment be dictacted by what is returned from the api but I will stick to to making
-  // the i/o decimal places similar to the examples from the problem statement
 
   return {
     fillable: orderSanityCheck.fillable,
+    bookUsed: openOrders === ob.asks ? "asks" : "bids",
     quotePrice: round10(quotePrice, -quoteIncrementPlaces),
     total: round10(total, -quoteIncrementPlaces)
   };

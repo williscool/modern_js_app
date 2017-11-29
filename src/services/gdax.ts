@@ -1,13 +1,29 @@
 import { URL } from "url";
 import {
   enumerateProducts,
-  getProductName,
-  orderBookCurrencyType
+  GdaxProduct,
+  getOrderBookOutputCurrencyType,
+  getProductName
 } from "../utils/enumerateProducts";
-import { generateQuote } from "../utils/generateQuote";
-import { Actions } from "../utils/utilities";
+import { GdaxOrderBook, generateQuote } from "../utils/generateQuote";
+import { Actions, OrderBookOutputCurrency } from "../utils/utilities";
+import { validateGdaxOrder } from "../utils/validateGdaxOrder";
 
-interface GdaxEchangeErrorContainer {
+function buildApIErrorContainer(response: Response) {
+  const errorObj: GdaxExchangeErrorContainer = {};
+  errorObj.statusCode = response.status;
+  errorObj.statusText = response.statusText;
+  // default to client error
+  errorObj.kind = "client";
+
+  if (response.status >= 500 && response.status <= 599) {
+    errorObj.kind = "server";
+  }
+
+  return errorObj;
+}
+
+export interface GdaxExchangeErrorContainer {
   kind?: string;
   statusCode?: number;
   statusText?: string;
@@ -58,7 +74,7 @@ export class GdaxService {
    * @type {[{}]}
    * @memberof GdaxService
    */
-  public productsJson: [{}];
+  public productsJson: [GdaxProduct];
   /**
    * Hash used to tell which currencies can be exchanged for each other
    *
@@ -69,51 +85,42 @@ export class GdaxService {
   /**
    * Object used to store error information for communincating with the gdax api
    *
-   * @type {GdaxEchangeErrorContainer}
+   * @type {GdaxExchangeErrorContainer}
    * @memberof GdaxService
    */
-  public errorObj: GdaxEchangeErrorContainer;
+  public errorObj: GdaxExchangeErrorContainer;
   constructor() {
     this.productExchangeHash = {};
     this.baseUrl = new URL(`${API_URL}${ENDPOINTS.products}`);
   }
-  // get the product types has and store them and associate them with their url
   /**
-   * Initialize the gdax service
+   * Call to fetch to actually get stuff from server
    *
-   * @returns
+   * @private
+   * @param {URL} url
+   * @returns {Promise}
    * @memberof GdaxService
    */
-  public init() {
+  private fetcher(url: URL) {
+    this.ok = true;
+    this.errorObj = {};
+
     return new Promise((resolve, reject) => {
-      fetch(this.baseUrl.toString())
+      fetch(url.toString())
         .then(response => {
           this.ok = response.ok;
 
           if (response.status >= 400 && response.status <= 599) {
             this.ok = false;
             // request error
-            this.errorObj = {};
-            this.errorObj.statusCode = response.status;
-            this.errorObj.statusText = response.statusText;
-            // default to client error
-            this.errorObj.kind = "client";
-
-            if (response.status >= 500 && response.status <= 599) {
-              this.errorObj.kind = "server";
-            }
+            this.errorObj = buildApIErrorContainer(response);
           }
 
           return response.json();
         })
         .then(response => {
           if (this.ok) {
-            // covers all 200 codes
-            // now we can get products hash in rest of app
-            this.productsJson = response;
-            this.productExchangeHash = enumerateProducts(this.productsJson);
-
-            return resolve();
+            return resolve(response);
           }
           // response not ok add the message from the json
           this.errorObj.message = response.message;
@@ -129,6 +136,19 @@ export class GdaxService {
 
           reject(this.errorObj.error);
         });
+    });
+  }
+  // get the product types has and store them and associate them with their url
+  /**
+   * Initialize the gdax service
+   *
+   * @returns
+   * @memberof GdaxService
+   */
+  public init() {
+    return this.fetcher(this.baseUrl).then((response: [GdaxProduct]) => {
+      this.productsJson = response;
+      this.productExchangeHash = enumerateProducts(this.productsJson);
     });
   }
 
@@ -153,7 +173,6 @@ export class GdaxService {
     // use productExchangeHash to figure out url
     const productName = getProductName(this.productExchangeHash, base, quote);
 
-    // TODO: test error handling for this and getting qutoes
     return new Promise((resolve, reject) => {
       if (!productName) {
         return reject(
@@ -163,32 +182,64 @@ export class GdaxService {
         );
       }
 
-      // TODO: also reject here on stuff like base max or min being too high here
+      const obQutputType = getOrderBookOutputCurrencyType(productName, base);
 
-      const quoteURL = new URL(`${this.baseUrl.toString()}/${productName}`);
+      const currentProductJson = this.productsJson.filter(
+        (obj: GdaxProduct) => obj.id === productName
+      )[0];
 
-      const obType = orderBookCurrencyType(productName, base);
+      const { quote_increment } = currentProductJson;
+
+      // default to satoshi
+      // https://en.bitcoin.it/wiki/Satoshi_(unit)
+      let increment = 8;
+
+      // if the quote currency is what we will output use its quote increment
+      if (obQutputType === OrderBookOutputCurrency.QUOTE) {
+        // decimal places
+        increment = quote_increment.toString().split(".")[1].length;
+      }
+
+      // build orderbook url
+      const quoteURL = new URL(
+        `${this.baseUrl.toString()}/${productName}/book`
+      );
       // set query params
       // tslint:disable-next-line:no-backbone-get-set-outside-model
       quoteURL.searchParams.set("level", "2");
 
-      fetch(quoteURL.toString())
-        .then(response => {
-          if (response.status === 200) {
-            return response.json();
-          }
-          // TODO: throw differnt errors to catch based on api response
-          throw new Error("Something went wrong on api server!");
-        })
-        .then(response => {
-          // resolve with the quote amount here
+      return this.fetcher(quoteURL)
+        .then((response: GdaxOrderBook) => {
+          // generate a quote for the amount
+
           const orderBook = response;
-          const output = generateQuote(orderBook, obType, action, amount);
-          resolve(output); // now we can get products hash in rest of app
+          const output = generateQuote(
+            orderBook,
+            obQutputType,
+            action,
+            amount,
+            increment
+          );
+
+          const { isValid, errorObj: validationErrorObj } = validateGdaxOrder(
+            output,
+            obQutputType,
+            currentProductJson,
+            amount
+          );
+
+          if (!isValid) {
+            this.errorObj = validationErrorObj;
+
+            return reject(this.errorObj.error);
+          }
+
+          // if after all of that validation we get then return successful resolve with order
+          return resolve(output);
         })
-        .catch(error => {
-          // TODO: let UI know things went wrong
-          reject(error);
+        .catch(err => {
+          // pass along fetcher errors
+          return reject(err);
         });
     });
   }
