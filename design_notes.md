@@ -1,11 +1,16 @@
 # Currency Exchange Quotes
 
-1. test happy path for gdax service getQuote
-2. test error paths for gdax service getQuote
+- center form and/or or figure out some theme from a tutorial
+- make sure io works correctly for quotes buy and sell
+- loading indicator for async actions.
+- done
+
+
+
+1. wire it ui
+2. polish UI
 3. (timebox 30 mins) awaitify
-4. wire it ui
-5. polish UI
-6. done
+4. done
 
 left
 
@@ -13,7 +18,6 @@ left
 - make sure ui around that is good
 - form validation
 - use it to print out stuff
-- write tests (just that form displays inputs.  extensive unit tests )
 
 more succiently
 
@@ -52,8 +56,6 @@ also need to handle error states. like api being down or something like that by 
   means your code will need to aggregate orders in the order book or use parts of orders to arrive at
   the exact quantity, 
 - and your final quote will be a weighted average of those prices.
-- (I'm pretty sure this is the unbounded knapsack problem lol. ) if not its at least related https://github.com/williscool/code_gym/blob/es6ify/javascript/interview_questions/cake_theif.js
-- https://www.interviewcake.com/question/javascript/cake-thief
 
 ## p0
 
@@ -73,13 +75,11 @@ also need to handle error states. like api being down or something like that by 
 - ship it to netlify
 - If you decide to write in an environment that requires compilation (i.e. webpack, coffeescript, etc), you should submit alongside your code a single script that will run your program.
 
-## p1
+## p1(things I would do in the future)
 
 - tracking (for when a user clicks, compares, prices of stuff, etc.) (just log to console)
 
-  ​
-
-## p2 (things I would do in the future) 
+## p2 (more things I would do in the future) 
 - setup hot module reload https://frontendmasters.com/courses/react/setting-up-hmr
 - use a number formatting (i.e. adding commas and dollar sign) input ala https://github.com/s-yadav/react-number-format
 - add a router if the app needed multiple pages
@@ -150,6 +150,11 @@ also need to handle error states. like api being down or something like that by 
 - test happy path for gdax service init
 - test error paths for gdax service init
 - (mock the api respone json to test our algorithm with)
+- test happy path for gdax service getQuote
+- test error paths for gdax service getQuote
+- write tests (just that form displays inputs.  extensive unit tests )
+- (I'm pretty sure this is the unbounded knapsack problem lol. ) if not its at least related https://github.com/williscool/code_gym/blob/es6ify/javascript/interview_questions/cake_theif.js
+- https://www.interviewcake.com/question/javascript/cake-thief
 
 
 

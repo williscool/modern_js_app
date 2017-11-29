@@ -3,8 +3,12 @@ import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
 import TextField from "material-ui/TextField";
 import * as React from "react";
+import { GdaxService } from "../../services/gdax";
 import { amountIsValid } from "../../utils/amountIsValid";
+import { GdaxOrderBookQuote } from "../../utils/generateQuote";
 import { Actions } from "../../utils/utilities";
+
+// tslint:disable:no-single-line-block-comment
 
 /**
  * Delinates the currency types.
@@ -22,8 +26,6 @@ export enum Curriences {
 /**
  * Its a form in react
  *
- * TODO: need to update this so that part of the constructor input is an enum of the curriences
- *
  * and the default base and quote currency
  *
  * @export
@@ -32,24 +34,106 @@ export enum Curriences {
  */
 export class Form extends React.Component {
   /**
-   * State of the component
+   * Service used to communicate with Gdax Api
    *
+   * @type {GdaxService}
+   * @memberof Form
+   */
+  public gdax: GdaxService;
+  /**
+   * State of the component
    *
    * @memberof Form
    */
   public state = {
+    productsLoaded: false,
     actions: Object.keys(Actions).map(k => Actions[k]),
     current_action: Actions.BUY,
-    curriences: Object.keys(Curriences).map(k => Curriences[k]),
-    base: Curriences.USD,
-    quote: Curriences.BTC,
+    base_curriences: [],
+    quote_curriences: [],
+    base: "",
+    quote: "",
     amount: "",
+    price: "",
+    total: "",
     actionErrorText: "",
     baseErrorText: "",
     quoteErrorText: "",
     amountErrorText: ""
   };
 
+  /**
+   * Callback for component in dom
+   *
+   * https://reactjs.org/docs/react-component.html#componentdidmount
+   *
+   * @memberof Form
+   */
+  public componentDidMount() {
+    // init the gdax service
+    this.gdax = new GdaxService();
+
+    // TODO: disable form on load and show a loading spinner here telling user we are loading products
+
+    // would store this in like local storage and not need to do it on every load
+
+    this.gdax
+      .init()
+      .then(() => {
+        // TODO: remove loding spinner and such
+
+        const baseCurriences = Object.keys(this.gdax.productExchangeHash);
+        const initBaseCurrency = baseCurriences.filter(k => k === "BTC")[0];
+
+        const quoteCurriences = Object.keys(
+          this.gdax.productExchangeHash[initBaseCurrency]
+        );
+        const initQuoteCurrency = quoteCurriences.filter(k => k === "USD")[0];
+
+        this.setState({
+          ...this.state,
+          base: initBaseCurrency,
+          quote: initQuoteCurrency,
+          base_curriences: baseCurriences,
+          quote_curriences: quoteCurriences
+        });
+      })
+      .catch(err => {
+        this.handleErrors(err);
+      });
+  }
+
+  /**
+   * deal with promise errors
+   *
+   * @private
+   * @memberof Form
+   */
+  private handleErrors(error: Error) {
+    // default to assuming its an error the gdax service handled;
+    let amountErrorText =
+      this.gdax.errorObj.error && this.gdax.errorObj.error.toString();
+
+    if (!amountErrorText) {
+      amountErrorText = error.toString();
+    }
+
+    this.setState({
+      amountErrorText
+    });
+  }
+  /**
+   * clear the form and gdax service of errors
+   *
+   * @private
+   * @memberof Form
+   */
+  private clearErrors() {
+    this.gdax.errorObj = {};
+    this.setState({
+      amountErrorText: ""
+    });
+  }
   /**
    * Change handler for select form inputs
    *
@@ -62,6 +146,15 @@ export class Form extends React.Component {
     index?: number,
     value?: string
   ) => {
+    if (keyName === "base" && value) {
+      // need to update the possible quote currencies
+      const newQuoteCurs = Object.keys(this.gdax.productExchangeHash[value]);
+      this.setState({
+        quote_curriences: newQuoteCurs,
+        quote: newQuoteCurs[0]
+      });
+    }
+
     this.setState({
       [keyName]: value
     });
@@ -77,7 +170,7 @@ export class Form extends React.Component {
    * I hate trying to type into text boxes that wont let you type intermediate somewhat invalid input
    * while you get to a valid value so I looked to a place that I feel has good UX around that
    *
-   * On submit I will use parseFloat to strip out any leading zeros
+   * On submit I use parseFloat to strip out any leading zeros
    *
    * @private
    * @memberof Form
@@ -86,6 +179,10 @@ export class Form extends React.Component {
     e: React.FormEvent<{}>,
     value: string
   ) => {
+    if (value === "") {
+      // if they clear the amount clear the error
+      this.clearErrors();
+    }
     // allows the input to be empty, or optionally have a decimal as long as its a number
     if (amountIsValid(value)) {
       // now that we know we have a valid value remove
@@ -103,8 +200,39 @@ export class Form extends React.Component {
    */
   private onSubmit(e: React.MouseEvent<{}>) {
     e.preventDefault();
-    // console.log(this.state);
-    // TODO: add form stuff here
+
+    // clear old errors and quote
+    this.clearErrors();
+    this.setState({
+      price: "",
+      total: ""
+    });
+
+    const amount = parseFloat(this.state.amount);
+
+    this.setState({
+      amount
+    });
+
+    this.gdax
+      .getQuote(
+        this.state.base,
+        this.state.quote,
+        this.state.current_action,
+        amount
+      )
+      .then((output: GdaxOrderBookQuote) => {
+        this.setState({
+          price: output.quotePrice,
+          total: output.total
+        });
+      })
+      .catch(err => {
+        // here you could use the error object kind to display the error in different place
+        // i.e. client or server errors could be an overlay
+        // this app is simple enough though that just showing in the amount area area under form works fine
+        this.handleErrors(err);
+      });
   }
 
   /**
@@ -139,11 +267,9 @@ export class Form extends React.Component {
           floatingLabelFixed={true}
           errorText={this.state.baseErrorText}
         >
-          {this.state.curriences
-            .filter(v => v !== this.state.quote)
-            .map((v, i) => {
-              return <MenuItem key={i} value={v} primaryText={v} />;
-            })}
+          {this.state.base_curriences.map((v, i) => {
+            return <MenuItem key={i} value={v} primaryText={v} />;
+          })}
         </SelectField>
         <br />
         <SelectField
@@ -154,11 +280,9 @@ export class Form extends React.Component {
           floatingLabelFixed={true}
           errorText={this.state.quoteErrorText}
         >
-          {this.state.curriences
-            .filter(v => v !== this.state.base)
-            .map((v, i) => {
-              return <MenuItem key={i} value={v} primaryText={v} />;
-            })}
+          {this.state.quote_curriences.map((v, i) => {
+            return <MenuItem key={i} value={v} primaryText={v} />;
+          })}
         </SelectField>
         <br />
         <TextField
@@ -178,7 +302,11 @@ export class Form extends React.Component {
           onClick={e => this.onSubmit(e)}
           primary={true}
         />
-        <p> {JSON.stringify(this.state, null, 2)} </p>
+        <p> Currency: {this.state.quote} </p>
+        <p> Price: {this.state.price} </p>
+        <p> Total: {this.state.total} </p>
+
+        {/* <p> {JSON.stringify(this.state, null, 2)} </p> */}
       </form>
     );
   }

@@ -5,7 +5,6 @@ import * as React from "react";
 import * as injectTapEventPlugin from "react-tap-event-plugin";
 
 import { Form } from "../Form";
-import { Hello } from "../Hello";
 
 const lightMuiTheme = getMuiTheme(lightBaseTheme);
 
@@ -22,7 +21,7 @@ injectTapEventPlugin();
 export const App: React.SFC = props => (
   <MuiThemeProvider muiTheme={lightMuiTheme}>
     <div className="App">
-      <Hello name="Webpack and TypeScript" enthusiasmLevel={5} />
+      <h2>Gdax Crypto Currency Exchange Quoter</h2>
       <Form />
     </div>
   </MuiThemeProvider>

@@ -1,16 +1,16 @@
 import { OrderBookOutputCurrency } from "./utilities";
 
 export interface GdaxProduct {
-  id: string;
-  base_currency: string;
-  quote_currency: string;
-  base_min_size: number;
-  base_max_size: number;
-  quote_increment: number;
-  display_name: string;
-  status: string;
-  margin_enabled: boolean;
-  status_message: string | null;
+  readonly id: string;
+  readonly base_currency: string;
+  readonly quote_currency: string;
+  readonly base_min_size: number;
+  readonly base_max_size: number;
+  readonly quote_increment: number;
+  readonly display_name: string;
+  readonly status: string;
+  readonly margin_enabled: boolean;
+  readonly status_message: string | null;
 }
 
 /**

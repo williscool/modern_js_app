@@ -20,6 +20,8 @@ export function validateGdaxOrder(
 ) {
   let errorObj: GdaxExchangeErrorContainer = {};
 
+  let { base_max_size, base_min_size } = product;
+
   // error if we cant fill order
   if (!order.fillable) {
     errorObj = buildValidationErrorContainer(
@@ -29,13 +31,13 @@ export function validateGdaxOrder(
 
   if (order.quotePrice && obQutputType === OrderBookOutputCurrency.BASE) {
     // if the output is base adjust base min and max with quotePrice
-    product.base_max_size *= 1 / order.quotePrice;
-    product.base_min_size *= 1 / order.quotePrice;
+    base_max_size *= 1 / order.quotePrice;
+    base_min_size *= 1 / order.quotePrice;
   }
 
   // error if amount is too much
-  if (amount < product.base_min_size || amount > product.base_max_size) {
-    errorObj = buildAmountErrorContainer(amount, product.base_max_size);
+  if (amount < base_min_size || amount > base_max_size) {
+    errorObj = buildAmountErrorContainer(amount, base_max_size);
   }
 
   return {

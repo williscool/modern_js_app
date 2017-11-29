@@ -1,4 +1,3 @@
-import { URL } from "url";
 import {
   enumerateProducts,
   GdaxProduct,
@@ -9,6 +8,12 @@ import { GdaxOrderBook, generateQuote } from "../utils/generateQuote";
 import { Actions, OrderBookOutputCurrency } from "../utils/utilities";
 import { validateGdaxOrder } from "../utils/validateGdaxOrder";
 
+/**
+ * Constructs api error objects
+ *
+ * @param {Response} response
+ * @returns {GdaxExchangeErrorContainer}
+ */
 function buildApIErrorContainer(response: Response) {
   const errorObj: GdaxExchangeErrorContainer = {};
   errorObj.statusCode = response.status;
