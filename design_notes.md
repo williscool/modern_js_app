@@ -1,83 +1,16 @@
 # Currency Exchange Quotes
 
-- center form and/or or figure out some theme from a tutorial
-- make sure io works correctly for quotes buy and sell
-- loading indicator for async actions.
-- done
-
-
-
-1. wire it ui
-2. polish UI
-3. (timebox 30 mins) awaitify
-4. done
-
-left
-
-- hit api get data
-- make sure ui around that is good
-- form validation
-- use it to print out stuff
-
-more succiently
-
-Gdax service will handle fetching data and state transitions
-
-1. on load say setting up prodtus and have loading animation and have the app in a loading state
-2. when ready disable loading state and switch to application loaded or ready. (form will have all of the currencies)
-3. form has buy and sell actions and the quote currencies are dictated by the base currency (i.e GBP can only go to BTC)
-4. when clicked with a form amount the gdax service will get the latest orderbook and calculate a current quote
-5. also need to validate values like greater than zero for input and not less than .01 for USD and however many decimal places for BTC
-
-also need to handle error states. like api being down or something like that by faking the bad response and having the gdax service handle it.
-
-## I/O
-
-### form output field follow (all strings)
-
-- price (The per-unit cost of the base currency)
-- total (Total quantity of quote currency)
-- currency (The quote currency)
-
-## Overview
-
-- Your goal is to build a client-side web application that provides quotes for digital currency trades using
-  data from the GDAX orderbook.
-- GDAX, the digital currency exchange operated by Coinbase, maintains an order book for each tradable
-  currency pair (eg. BTC-USD).
-- An order book is comprised of a series of bids (offers to buy) and asks (offers to sell).
-- Bids are sorted descending by price (highest price first) and asks are sorted ascending by price (lowest price first).
-- If these two numbers ever cross a trade is executed and those bids or asks are removed from the order book.
-- The GDAX API exposes an endpoint to retrieve the current order book for each currency pair. For this task, you should use the level 2 query parameter to fetch aggregated order information. Note: this API can be accessed unauthenticated; you do not need API keys or a GDAX account to access it.  https://docs.gdax.com/#get-product-order-book
-- Your application will handle users trying to buy or sell a particular amount of a currency (the base
-  currency) with another currency (the quote currency).
-- The application should use the orderbook to determine the best price the user would be able to get for the request by executing trades on GDAX.
-- Note that the quantity your user enters will rarely match a quantity in the order book exactly. This
-  means your code will need to aggregate orders in the order book or use parts of orders to arrive at
-  the exact quantity, 
-- and your final quote will be a weighted average of those prices.
+1. (timebox 30 mins) awaitify
+2. done
 
 ## p0
 
-- On load I would have loading thing that tells the user we are getting product types
-- Use curency hash to build what is in the base and quote currrency dropdowns
-- use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
-- make sure we've got some kind of loading animation for when it is processing for the quote
-- let user know we are crunching data once we get it back if it takes  a while 
-- You should also write unit tests to ensure the logic functions correctly.
-- The application should consist of a single form that accepts 4 inputs and displays 3 outputs.
-- If there are any errors processing the request, the form should display the error. https://docs.gdax.com/#errors (make sure to test this part with mocks / fake requests)
-- Try to make the form intuitive and protect the user from common errors.
-- The application should be able to quote trades between any two currencies which have an orderbook
-  on GDAX.
-- It should also be able to support trades where the base and quote currencies are the inverse of a GDAX trading pair. For example, the application should be able to quote a buy of BTC (base currency) using ETH (quote currency) or LTC (quote currency), even though the available GDAX orderbooks are ETH-BTC and LTC-BTC.
-- product types https://docs.gdax.com/#get-products
 - ship it to netlify
 - If you decide to write in an environment that requires compilation (i.e. webpack, coffeescript, etc), you should submit alongside your code a single script that will run your program.
 
 ## p1(things I would do in the future)
 
-- tracking (for when a user clicks, compares, prices of stuff, etc.) (just log to console)
+- tracking (for when a user clicks, compares, prices of stuff, etc.) 
 
 ## p2 (more things I would do in the future) 
 - setup hot module reload https://frontendmasters.com/courses/react/setting-up-hmr
@@ -135,27 +68,124 @@ also need to handle error states. like api being down or something like that by 
 ### P0
 
 - folder per component with its css and etc. in there too. (imported at the top)
+
 - once we get the form working. just print it out in the ui under the form
+
 - The application should be a client-side application that does not depend on a server. All API requests,
   form processing, and result display should be done client side in the browser.
+
 - test form has x inputs,  (covered by snapshots)
+
 - when you change stuff their values change (that would be testing the framework react and material ui handle that for us)
+
 - figure out a way to ban currencies from consideration
+
 - https://github.com/chriso/validator.js
+
 - (would just test this in a seperate unit test) test that you can't invalid and you can input valid input in the amount section 
+
 - hit the api. copy resp with chrome `copy` use it to make mock data to test algorithm on (do it for 1 product type too. algorithm will work on all once we have one)
+
 - once you have teh product types build an object where the keys are the currency types and the values are the currences it can be converted to. 
+
 - there will be a gdax service at `gdax.ts` and that will use `utils` the process the response from the gdax api . the service should also handle errors and such
+
 - test quote algo
+
 - test happy path for gdax service init
+
 - test error paths for gdax service init
+
 - (mock the api respone json to test our algorithm with)
+
 - test happy path for gdax service getQuote
+
 - test error paths for gdax service getQuote
+
 - write tests (just that form displays inputs.  extensive unit tests )
+
 - (I'm pretty sure this is the unbounded knapsack problem lol. ) if not its at least related https://github.com/williscool/code_gym/blob/es6ify/javascript/interview_questions/cake_theif.js
+
 - https://www.interviewcake.com/question/javascript/cake-thief
 
+- wire it ui
+
+  left
+
+  - hit api get data
+  - make sure io works correctly for quotes buy and sell
+  - loading indicator for async actions.
+  - make sure ui around that is good
+  - form validation
+  - use it to print out stuff
+
+  more succiently
+
+  Gdax service will handle fetching data and state transitions
+
+  1. on load say setting up prodtus and have loading animation and have the app in a loading state
+  2. when ready disable loading state and switch to application loaded or ready. (form will have all of the currencies)
+  3. form has buy and sell actions and the quote currencies are dictated by the base currency (i.e GBP can only go to BTC)
+  4. when clicked with a form amount the gdax service will get the latest orderbook and calculate a current quote
+  5. also need to validate values like greater than zero for input and not less than .01 for USD and however many decimal places for BTC
+
+  also need to handle error states. like api being down or something like that by faking the bad response and having the gdax service handle it.
+
+- On load I would have loading thing that tells the user we are getting product types
+
+- Use curency hash to build what is in the base and quote currrency dropdowns
+
+- use this to help spec https://www.educative.io/collection/5668639101419520/5649050225344512 also think of edge cases and such
+
+- make sure we've got some kind of loading animation for when it is processing for the quote
+
+- let user know we are crunching data once we get it back if it takes  a while 
+
+- You should also write unit tests to ensure the logic functions correctly.
+
+- The application should consist of a single form that accepts 4 inputs and displays 3 outputs.
+
+- If there are any errors processing the request, the form should display the error. https://docs.gdax.com/#errors (make sure to test this part with mocks / fake requests)
+
+- Try to make the form intuitive and protect the user from common errors.
+
+- The application should be able to quote trades between any two currencies which have an orderbook
+  on GDAX.
+
+- It should also be able to support trades where the base and quote currencies are the inverse of a GDAX trading pair. For example, the application should be able to quote a buy of BTC (base currency) using ETH (quote currency) or LTC (quote currency), even though the available GDAX orderbooks are ETH-BTC and LTC-BTC.
+
+- product types https://docs.gdax.com/#get-products
+
+
+## I/O
+
+### form output field follow (all strings)
+
+- price (The per-unit cost of the base currency)
+- total (Total quantity of quote currency)
+- currency (The quote currency)
+
+## Overview
+
+- Your goal is to build a client-side web application that provides quotes for digital currency trades using
+  data from the GDAX orderbook.
+- GDAX, the digital currency exchange operated by Coinbase, maintains an order book for each tradable
+  currency pair (eg. BTC-USD).
+- An order book is comprised of a series of bids (offers to buy) and asks (offers to sell).
+- Bids are sorted descending by price (highest price first) and asks are sorted ascending by price (lowest price first).
+- If these two numbers ever cross a trade is executed and those bids or asks are removed from the order book.
+- The GDAX API exposes an endpoint to retrieve the current order book for each currency pair. For this task, you should use the level 2 query parameter to fetch aggregated order information. Note: this API can be accessed unauthenticated; you do not need API keys or a GDAX account to access it.  https://docs.gdax.com/#get-product-order-book
+- Your application will handle users trying to buy or sell a particular amount of a currency (the base
+  currency) with another currency (the quote currency).
+- The application should use the orderbook to determine the best price the user would be able to get for the request by executing trades on GDAX.
+- Note that the quantity your user enters will rarely match a quantity in the order book exactly. This
+  means your code will need to aggregate orders in the order book or use parts of orders to arrive at
+  the exact quantity, 
+- and your final quote will be a weighted average of those prices.
+- center form and/or or figure out some theme from a tutorial
+- done
+
+1. polish UI
 
 
 ### Pre
@@ -208,3 +238,4 @@ also need to handle error states. like api being down or something like that by 
 - https://github.github.io/fetch/
 - https://github.com/github/fetch/issues/203
 - https://gist.github.com/msmfsd/fca50ab095b795eb39739e8c4357a808
+- https://codepen.io/McXinuS/pen/yMqJLd

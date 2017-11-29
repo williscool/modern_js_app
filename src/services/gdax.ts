@@ -99,6 +99,17 @@ export class GdaxService {
     this.baseUrl = new URL(`${API_URL}${ENDPOINTS.products}`);
   }
   /**
+   * Lets you get the json for a specific product
+   *
+   * @param {string} productName
+   * @memberof GdaxService
+   */
+  public getProductJSONByName(productName: string) {
+    return this.productsJson.filter(
+      (obj: GdaxProduct) => obj.id === productName
+    )[0];
+  }
+  /**
    * Call to fetch to actually get stuff from server
    *
    * @private
@@ -189,9 +200,7 @@ export class GdaxService {
 
       const obQutputType = getOrderBookOutputCurrencyType(productName, base);
 
-      const currentProductJson = this.productsJson.filter(
-        (obj: GdaxProduct) => obj.id === productName
-      )[0];
+      const currentProductJson = this.getProductJSONByName(productName);
 
       const { quote_increment } = currentProductJson;
 

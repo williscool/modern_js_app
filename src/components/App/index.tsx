@@ -21,7 +21,6 @@ injectTapEventPlugin();
 export const App: React.SFC = props => (
   <MuiThemeProvider muiTheme={lightMuiTheme}>
     <div className="App">
-      <h2>Gdax Crypto Currency Exchange Quoter</h2>
       <Form />
     </div>
   </MuiThemeProvider>

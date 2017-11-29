@@ -25,7 +25,9 @@ export function validateGdaxOrder(
   // error if we cant fill order
   if (!order.fillable) {
     errorObj = buildValidationErrorContainer(
-      `Could not fill order with open ${order.bookUsed}`
+      `Could not fill order with open ${
+        order.bookUsed
+      } availble from level 2 book`
     );
   }
 

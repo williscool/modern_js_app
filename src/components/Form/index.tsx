@@ -1,3 +1,4 @@
+import CircularProgress from "material-ui/CircularProgress";
 import MenuItem from "material-ui/MenuItem";
 import RaisedButton from "material-ui/RaisedButton";
 import SelectField from "material-ui/SelectField";
@@ -5,6 +6,7 @@ import TextField from "material-ui/TextField";
 import * as React from "react";
 import { GdaxService } from "../../services/gdax";
 import { amountIsValid } from "../../utils/amountIsValid";
+import { getProductName } from "../../utils/enumerateProducts";
 import { GdaxOrderBookQuote } from "../../utils/generateQuote";
 import { Actions } from "../../utils/utilities";
 
@@ -46,7 +48,7 @@ export class Form extends React.Component {
    * @memberof Form
    */
   public state = {
-    productsLoaded: false,
+    isLoaded: false,
     actions: Object.keys(Actions).map(k => Actions[k]),
     current_action: Actions.BUY,
     base_curriences: [],
@@ -73,15 +75,11 @@ export class Form extends React.Component {
     // init the gdax service
     this.gdax = new GdaxService();
 
-    // TODO: disable form on load and show a loading spinner here telling user we are loading products
-
     // would store this in like local storage and not need to do it on every load
 
     this.gdax
       .init()
       .then(() => {
-        // TODO: remove loding spinner and such
-
         const baseCurriences = Object.keys(this.gdax.productExchangeHash);
         const initBaseCurrency = baseCurriences.filter(k => k === "BTC")[0];
 
@@ -92,6 +90,7 @@ export class Form extends React.Component {
 
         this.setState({
           ...this.state,
+          isLoaded: true,
           base: initBaseCurrency,
           quote: initQuoteCurrency,
           base_curriences: baseCurriences,
@@ -101,6 +100,34 @@ export class Form extends React.Component {
       .catch(err => {
         this.handleErrors(err);
       });
+  }
+
+  /**
+   * Returns the range a quote can be in
+   *
+   * @returns
+   * @memberof Form
+   */
+  public rangeText() {
+    let output = "";
+
+    if (this.state.isLoaded) {
+      const productName = getProductName(
+        this.gdax.productExchangeHash,
+        this.state.base,
+        this.state.quote
+      );
+
+      if (productName) {
+        const [productBase] = productName.split("-");
+        const currentProductJson = this.gdax.getProductJSONByName(productName);
+        const { base_max_size, base_min_size } = currentProductJson;
+
+        output = ` (${base_min_size} - ${base_max_size} in ${productBase})`;
+      }
+    }
+
+    return output;
   }
 
   /**
@@ -208,10 +235,19 @@ export class Form extends React.Component {
       total: ""
     });
 
-    const amount = parseFloat(this.state.amount);
+    // put form into loading start again
+    this.setState({
+      isLoaded: false
+    });
+
+    let inputAmount = 0;
+
+    if (this.state.amount !== "") {
+      inputAmount = parseFloat(this.state.amount);
+    }
 
     this.setState({
-      amount
+      amount: inputAmount
     });
 
     this.gdax
@@ -219,10 +255,11 @@ export class Form extends React.Component {
         this.state.base,
         this.state.quote,
         this.state.current_action,
-        amount
+        inputAmount
       )
       .then((output: GdaxOrderBookQuote) => {
         this.setState({
+          isLoaded: true,
           price: output.quotePrice,
           total: output.total
         });
@@ -232,7 +269,27 @@ export class Form extends React.Component {
         // i.e. client or server errors could be an overlay
         // this app is simple enough though that just showing in the amount area area under form works fine
         this.handleErrors(err);
+
+        // let user try again
+        this.setState({
+          isLoaded: true
+        });
       });
+  }
+
+  /**
+   * Just generates the markup for the loading spinner
+   *
+   * @private
+   * @returns
+   * @memberof Form
+   */
+  private loadingMarkup() {
+    return (
+      <div className="form_loading_indicator">
+        loading... <CircularProgress />
+      </div>
+    );
   }
 
   /**
@@ -242,8 +299,19 @@ export class Form extends React.Component {
    * @memberof Form
    */
   public render() {
+    let loader = null;
+
+    if (!this.state.isLoaded) {
+      loader = this.loadingMarkup();
+    }
+
     return (
       <form>
+        <h2>Gdax Crypto Currency Exchange Quoter</h2>
+        <p className="subtitle">
+          Pick your currencies, input your amount, and find your prices!
+        </p>
+        {loader}
         <SelectField
           className="action"
           value={this.state.current_action}
@@ -266,6 +334,7 @@ export class Form extends React.Component {
           floatingLabelText="Base Currency"
           floatingLabelFixed={true}
           errorText={this.state.baseErrorText}
+          disabled={!this.state.isLoaded}
         >
           {this.state.base_curriences.map((v, i) => {
             return <MenuItem key={i} value={v} primaryText={v} />;
@@ -279,6 +348,7 @@ export class Form extends React.Component {
           floatingLabelText="Quote Currency"
           floatingLabelFixed={true}
           errorText={this.state.quoteErrorText}
+          disabled={!this.state.isLoaded}
         >
           {this.state.quote_curriences.map((v, i) => {
             return <MenuItem key={i} value={v} primaryText={v} />;
@@ -291,7 +361,7 @@ export class Form extends React.Component {
           hintText="10.00"
           value={this.state.amount}
           onChange={(e, v) => this.handleAmountTextFieldChange(e, v)}
-          floatingLabelText="Amount"
+          floatingLabelText={`Amount${this.rangeText()}`}
           floatingLabelFixed={true}
           errorText={this.state.amountErrorText}
         />
@@ -301,6 +371,7 @@ export class Form extends React.Component {
           label="Submit"
           onClick={e => this.onSubmit(e)}
           primary={true}
+          disabled={!this.state.isLoaded}
         />
         <p> Currency: {this.state.quote} </p>
         <p> Price: {this.state.price} </p>

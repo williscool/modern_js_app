@@ -37,8 +37,8 @@ describe("validateGdaxOrder", () => {
     expect(isValid).toBeFalsy();
     expect(errorObj).toBeDefined();
     expect(errorObj.kind).toBe("validation");
-    expect(errorObj.message).toMatch(/open asks/);
-    expect(errorObj.error && errorObj.error.toString()).toMatch(/open asks/);
+    expect(errorObj.message).toMatch(/asks/);
+    expect(errorObj.error && errorObj.error.toString()).toMatch(/asks/);
   });
 
   describe("validates order", () => {
