@@ -5,7 +5,7 @@ import {
   getOrderBookOutputCurrencyType,
   getProductName
 } from "../utils/enumerateProducts";
-import { GdaxOrderBook, generateQuote } from "../utils/generateQuote";
+import { generateQuote } from "../utils/generateQuote";
 import { Actions, OrderBookOutputCurrency } from "../utils/utilities";
 import { validateGdaxOrder } from "../utils/validateGdaxOrder";
 
@@ -178,8 +178,6 @@ export class GdaxService {
     return response;
   }
 
-  // use generateQuote util
-  // to make sure to start loading animation before this
   /**
    * Get the quote
    *
@@ -190,7 +188,7 @@ export class GdaxService {
    * @returns
    * @memberof GdaxService
    */
-  public getQuote(
+  public async getQuote(
     base: string,
     quote: string,
     action: Actions,
@@ -199,72 +197,59 @@ export class GdaxService {
     // use productExchangeHash to figure out url
     const productName = getProductName(this.productExchangeHash, base, quote);
 
-    return new Promise((resolve, reject) => {
-      if (!productName) {
-        return reject(
-          new Error(
-            `currency exchange product ${base}-${quote} does not exist.`
-          )
-        );
-      }
-
-      const obQutputType = getOrderBookOutputCurrencyType(productName, base);
-
-      const currentProductJson = this.getProductJSONByName(productName);
-
-      const { quote_increment } = currentProductJson;
-
-      // default to satoshi
-      // https://en.bitcoin.it/wiki/Satoshi_(unit)
-      let increment = 8;
-
-      // if the quote currency is what we will output use its quote increment
-      if (obQutputType === OrderBookOutputCurrency.QUOTE) {
-        // decimal places
-        increment = quote_increment.toString().split(".")[1].length;
-      }
-
-      // build orderbook url
-      const quoteURL = new URL(
-        `${this.baseUrl.toString()}/${productName}/book`
+    if (!productName) {
+      throw new Error(
+        `currency exchange product ${base}-${quote} does not exist.`
       );
-      // set query params
-      // tslint:disable-next-line:no-backbone-get-set-outside-model
-      quoteURL.searchParams.set("level", "2");
+    }
 
-      return this.fetcher(quoteURL)
-        .then((response: GdaxOrderBook) => {
-          // generate a quote for the amount
+    const obQutputType = getOrderBookOutputCurrencyType(productName, base);
 
-          const orderBook = response;
-          const output = generateQuote(
-            orderBook,
-            obQutputType,
-            action,
-            amount,
-            increment
-          );
+    const currentProductJson = this.getProductJSONByName(productName);
 
-          const { isValid, errorObj: validationErrorObj } = validateGdaxOrder(
-            output,
-            obQutputType,
-            currentProductJson,
-            amount
-          );
+    const { quote_increment } = currentProductJson;
 
-          if (!isValid) {
-            this.errorObj = validationErrorObj;
+    // default to satoshi
+    // https://en.bitcoin.it/wiki/Satoshi_(unit)
+    let increment = 8;
 
-            return reject(this.errorObj.error);
-          }
+    // if the quote currency is what we will output use its quote increment
+    if (obQutputType === OrderBookOutputCurrency.QUOTE) {
+      // decimal places
+      increment = quote_increment.toString().split(".")[1].length;
+    }
 
-          // if after all of that validation we get then return successful resolve with order
-          return resolve(output);
-        })
-        .catch(err => {
-          // pass along fetcher errors
-          return reject(err);
-        });
-    });
+    // build orderbook url
+    const quoteURL = new URL(`${this.baseUrl.toString()}/${productName}/book`);
+    // set query params
+    // tslint:disable-next-line:no-backbone-get-set-outside-model
+    quoteURL.searchParams.set("level", "2");
+
+    const orderBook = await this.fetcher(quoteURL);
+
+    // generate a quote for the amount
+    const output = generateQuote(
+      orderBook,
+      obQutputType,
+      action,
+      amount,
+      increment
+    );
+
+    const { isValid, errorObj: validationErrorObj } = validateGdaxOrder(
+      output,
+      obQutputType,
+      currentProductJson,
+      amount
+    );
+
+    if (!isValid) {
+      this.errorObj = validationErrorObj;
+
+      throw this.errorObj.error;
+    }
+
+    // if after all of that validation we get then return successful resolve with order
+    return output;
   }
 }
