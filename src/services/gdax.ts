@@ -1,3 +1,4 @@
+import { URL } from "url";
 import {
   enumerateProducts,
   GdaxProduct,
@@ -8,6 +9,7 @@ import { GdaxOrderBook, generateQuote } from "../utils/generateQuote";
 import { Actions, OrderBookOutputCurrency } from "../utils/utilities";
 import { validateGdaxOrder } from "../utils/validateGdaxOrder";
 
+// const URL = require('url').URL
 /**
  * Constructs api error objects
  *
@@ -117,42 +119,47 @@ export class GdaxService {
    * @returns {Promise}
    * @memberof GdaxService
    */
-  private fetcher(url: URL) {
-    this.ok = true;
+  private async fetcher(url: URL) {
+    this.ok = false;
     this.errorObj = {};
+    let response = null;
+    let data;
 
-    return new Promise((resolve, reject) => {
-      fetch(url.toString())
-        .then(response => {
-          this.ok = response.ok;
+    try {
+      response = await fetch(url.toString());
+      this.ok = response.ok;
+      if (response.status >= 400 && response.status <= 599) {
+        this.ok = false;
+        // request error
+        this.errorObj = buildApIErrorContainer(response);
+      }
+      data = await response.json();
 
-          if (response.status >= 400 && response.status <= 599) {
-            this.ok = false;
-            // request error
-            this.errorObj = buildApIErrorContainer(response);
-          }
+      if (!this.ok) {
+        this.errorObj.message = data.message;
+        this.errorObj.error = new Error(this.errorObj.message);
+        throw this.errorObj.error;
+      }
+    } catch (error) {
+      this.ok = false;
 
-          return response.json();
-        })
-        .then(response => {
-          if (this.ok) {
-            return resolve(response);
-          }
-          // response not ok add the message from the json
-          this.errorObj.message = response.message;
-          this.errorObj.error = new Error(this.errorObj.message);
+      // malformed content error most likely server can return json
+      // whatever it is pass it along
+      if (this.errorObj && !this.errorObj.message) {
+        this.errorObj.error = error;
+      }
 
-          return reject(this.errorObj.error);
-        })
-        .catch(error => {
-          this.ok = false;
-          // likely either a network error or a parsing error
-          this.errorObj.kind = "unknown";
-          this.errorObj.error = error;
+      if (!this.errorObj) {
+        // unknown error likely a connection error. or something
+        this.errorObj = {};
+        this.errorObj.kind = "unknown";
+        this.errorObj.error = error;
+      }
 
-          reject(this.errorObj.error);
-        });
-    });
+      throw this.errorObj.error;
+    }
+
+    return data;
   }
   // get the product types has and store them and associate them with their url
   /**
@@ -161,11 +168,14 @@ export class GdaxService {
    * @returns
    * @memberof GdaxService
    */
-  public init() {
-    return this.fetcher(this.baseUrl).then((response: [GdaxProduct]) => {
-      this.productsJson = response;
-      this.productExchangeHash = enumerateProducts(this.productsJson);
-    });
+  public async init() {
+    let response: [GdaxProduct];
+
+    response = await this.fetcher(this.baseUrl);
+    this.productsJson = response;
+    this.productExchangeHash = enumerateProducts(this.productsJson);
+
+    return response;
   }
 
   // use generateQuote util

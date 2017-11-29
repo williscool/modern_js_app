@@ -83,9 +83,9 @@ describe("GdaxService", () => {
 
         gdax.init().catch(err => {
           expect(err).toBeDefined();
-          expect(gdax.productsJson).toBeFalsy();
           expect(err instanceof Error).toEqual(true);
           expect(err.toString()).toMatch(/JSON/i);
+          expect(gdax.productsJson).toBeFalsy();
           expect(gdax.errorObj.error instanceof Error).toEqual(true);
           expect(gdax.errorObj.error && gdax.errorObj.error.toString()).toMatch(
             /JSON/i
