@@ -5,14 +5,16 @@ import {
   WDS_PORT,
   STATIC_PATH,
   APP_NAME,
-  APP_CONTAINER_CLASS
+  APP_CONTAINER_CLASS,
+  WDS_HOST
 } from "./src/config";
 
 import { isProd } from "./src/util";
 
 export default {
   devServer: {
-    port: WDS_PORT
+    host: WDS_HOST,
+    port: WDS_PORT,
   },
   devtool: isProd ? false : "source-map",
   entry: ["./src"],
